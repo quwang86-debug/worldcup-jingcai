@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers 静态站点配置：构建产物 dist/ 作为静态资源全球分发
+  "name": "worldcup-jingcai",
+  "compatibility_date": "2026-06-12",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
