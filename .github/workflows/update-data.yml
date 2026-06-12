@@ -1,0 +1,43 @@
+name: 更新赛程与赔率数据
+
+on:
+  schedule:
+    # UTC 时间每小时第 7 分执行（避开整点高峰）；北京时间同为每小时一次
+    - cron: "7 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 安装 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 抓取赛程与赔率
+        run: |
+          node scripts/fetch_worldcup_schedule.mjs
+          node scripts/fetch_odds.mjs
+
+      - name: 有变更则提交推送
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "数据无变化，跳过提交"
+          else
+            git commit -m "chore(data): 自动更新赛程与赔率 $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M')"
+            git push
+          fi

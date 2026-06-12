@@ -1,0 +1,10 @@
+# 依赖与构建产物
+node_modules/
+dist/
+
+# 本地验收截图
+screenshots/
+
+# 系统与编辑器
+.DS_Store
+*.log

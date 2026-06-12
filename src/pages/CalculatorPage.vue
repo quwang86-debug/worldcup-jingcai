@@ -1,0 +1,625 @@
+<script setup>
+import { computed, onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { matchById, upcomingMatches } from "../data/matches.js";
+import { PLAY_TYPES, playTypeById } from "../data/playTypes.js";
+import { MAX_LEGS, addMatchDefault, legs, removeLegAt } from "../data/betSlip.js";
+import BottomSheet from "../components/BottomSheet.vue";
+import GroupPill from "../components/GroupPill.vue";
+
+const route = useRoute();
+
+const UNIT_PRICE = 2; // 每注 2 元
+const PAYOUT_CAP = 5_000_000; // 竞彩单票最高奖金限额
+
+/* ---------- 场次（腿）管理：与全局选注单共享 ---------- */
+
+const sheetOpen = ref(false);
+const sheetSearch = ref("");
+
+const candidates = computed(() => {
+  const q = sheetSearch.value.trim().toLowerCase();
+  return upcomingMatches()
+    .filter((m) => !legs.some((l) => String(l.matchId) === String(m.espn_event_id)))
+    .filter((m) => !q || `${m.fixture_zh}${m.fixture}`.toLowerCase().includes(q))
+    .slice(0, 40);
+});
+
+function addLeg(match) {
+  addMatchDefault(match);
+  sheetOpen.value = false;
+  sheetSearch.value = "";
+}
+
+function removeLeg(index) {
+  removeLegAt(index);
+}
+
+function legOptions(leg) {
+  const match = matchById(leg.matchId);
+  return match ? playTypeById(leg.playId).options(match) : [];
+}
+
+function onPlayChange(leg) {
+  const options = legOptions(leg);
+  if (options.length) {
+    leg.pick = options[0].pick;
+    leg.odds = options[0].odds;
+  }
+}
+
+function onPickChange(leg) {
+  const option = legOptions(leg).find((o) => o.pick === leg.pick);
+  if (option) leg.odds = option.odds;
+}
+
+onMounted(() => {
+  const id = route.query.add;
+  if (id) {
+    const match = matchById(id);
+    if (match && match.status_state === "pre") addMatchDefault(match);
+  }
+});
+
+/* ---------- 过关方式与奖金计算 ---------- */
+
+const multiplier = ref(1);
+const selectedSizes = ref(new Set());
+
+const sizeOptions = computed(() => {
+  const n = legs.length;
+  if (n < 2) return [];
+  const sizes = [];
+  for (let m = 2; m <= n; m++) sizes.push(m);
+  return sizes;
+});
+
+/* 场次变化时清掉失效的过关方式；若一个都没选则默认 n 串 1，移动端少一步操作 */
+watch(
+  () => legs.length,
+  (n) => {
+    const valid = [...selectedSizes.value].filter((m) => m >= 2 && m <= n);
+    if (!valid.length && n >= 2) {
+      selectedSizes.value = new Set([n]);
+    } else if (valid.length !== selectedSizes.value.size) {
+      selectedSizes.value = new Set(valid);
+    }
+  },
+  { immediate: true }
+);
+
+function toggleSize(m) {
+  const next = new Set(selectedSizes.value);
+  if (next.has(m)) next.delete(m);
+  else next.add(m);
+  selectedSizes.value = next;
+}
+
+function choose(n, k) {
+  let r = 1;
+  for (let i = 1; i <= k; i++) r = (r * (n - i + 1)) / i;
+  return Math.round(r);
+}
+
+/** 各阶初等对称多项式：e[m] = 所有 m 场组合的赔率乘积之和 */
+const symSums = computed(() => {
+  let coef = [1];
+  for (const leg of legs) {
+    const odds = Number(leg.odds) || 0;
+    const next = [...coef, 0];
+    for (let i = coef.length; i > 0; i--) next[i] += coef[i - 1] * odds;
+    coef = next;
+  }
+  return coef;
+});
+
+const result = computed(() => {
+  const n = legs.length;
+  const stake = UNIT_PRICE * Math.max(1, Math.floor(multiplier.value) || 1);
+
+  if (n === 0) return null;
+  if (n === 1) {
+    const odds = Number(legs[0].odds) || 0;
+    return { mode: "单关", tickets: 1, invest: stake, payout: odds * stake };
+  }
+
+  const sizes = [...selectedSizes.value].filter((m) => m >= 2 && m <= n);
+  if (!sizes.length) return { mode: "未选过关方式", tickets: 0, invest: 0, payout: 0 };
+
+  let tickets = 0;
+  let payout = 0;
+  for (const m of sizes) {
+    tickets += choose(n, m);
+    payout += (symSums.value[m] || 0) * stake;
+  }
+  const label = sizes.length === 1 && sizes[0] === n
+    ? `${n}串1`
+    : `${sizes.map((m) => `${m}串1`).join("+")} 组合（共${tickets}注）`;
+  return { mode: label, tickets, invest: tickets * stake, payout };
+});
+
+const capped = computed(() => result.value && result.value.payout > PAYOUT_CAP);
+
+const fmt = (v) =>
+  v >= 10000 ? `${(v / 10000).toFixed(2)}万` : v.toFixed(2);
+
+/* ---------- 本地投注记录 ---------- */
+
+const STORAGE_KEY = "wc_tickets";
+const tickets = ref(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+
+function persist() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(tickets.value));
+}
+
+function saveTicket() {
+  if (!result.value || !result.value.tickets) return;
+  tickets.value.unshift({
+    id: Date.now(),
+    time: new Date().toLocaleString("zh-CN", { hour12: false }),
+    legs: legs.map((l) => ({ label: l.label, pick: l.pick, odds: l.odds })),
+    mode: result.value.mode,
+    invest: result.value.invest,
+    payout: Math.min(result.value.payout, PAYOUT_CAP),
+    status: "pending",
+  });
+  persist();
+}
+
+function setStatus(ticket, status) {
+  ticket.status = status;
+  persist();
+}
+
+function removeTicket(id) {
+  tickets.value = tickets.value.filter((t) => t.id !== id);
+  persist();
+}
+
+const profit = computed(() => {
+  let invested = 0;
+  let won = 0;
+  for (const t of tickets.value) {
+    if (t.status === "pending") continue;
+    invested += t.invest;
+    if (t.status === "win") won += t.payout;
+  }
+  return { invested, won, net: won - invested };
+});
+</script>
+
+<template>
+  <div class="page calc-page">
+    <h1>串关奖金计算器</h1>
+    <p class="subtitle">最多 {{ MAX_LEGS }} 场过关 · 赔率可手动修改 · 计算结果仅供参考</p>
+
+    <div class="two-col">
+      <section class="main-col">
+        <!-- 已选场次 -->
+        <div v-if="!legs.length" class="panel panel-pad empty-state">
+          <p>还没有选择场次。</p>
+          <button class="btn btn-gold" type="button" @click="sheetOpen = true">+ 添加场次</button>
+        </div>
+
+        <div v-for="(leg, i) in legs" :key="leg.matchId" class="panel leg">
+          <div class="leg-head">
+            <div class="leg-title">
+              <GroupPill v-if="leg.group" :group="leg.group" />
+              <strong>{{ leg.label }}</strong>
+            </div>
+            <button class="btn btn-ghost btn-sm" type="button" @click="removeLeg(i)">移除</button>
+          </div>
+          <div class="leg-meta num">{{ leg.date }}</div>
+          <div class="leg-controls">
+            <select v-model="leg.playId" class="select" @change="onPlayChange(leg)">
+              <option v-for="p in PLAY_TYPES" :key="p.id" :value="p.id">{{ p.label }}</option>
+            </select>
+            <select v-model="leg.pick" class="select" @change="onPickChange(leg)">
+              <option v-for="o in legOptions(leg)" :key="o.pick" :value="o.pick">{{ o.pick }}</option>
+            </select>
+            <input
+              v-model.number="leg.odds"
+              class="input num"
+              type="number"
+              step="0.01"
+              min="1"
+              inputmode="decimal"
+              aria-label="赔率"
+            >
+          </div>
+        </div>
+
+        <button
+          v-if="legs.length && legs.length < MAX_LEGS"
+          class="btn add-more"
+          type="button"
+          @click="sheetOpen = true"
+        >
+          + 添加场次（{{ legs.length }}/{{ MAX_LEGS }}）
+        </button>
+
+        <!-- 过关方式 -->
+        <div v-if="sizeOptions.length" class="panel panel-pad">
+          <h2 class="section-title">过关方式（可多选组合）</h2>
+          <div class="size-pills">
+            <button
+              v-for="m in sizeOptions"
+              :key="m"
+              type="button"
+              class="size-pill num"
+              :class="{ active: selectedSizes.has(m) }"
+              @click="toggleSize(m)"
+            >
+              {{ m }}串1
+              <span class="combos">{{ choose(legs.length, m) }}注</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 投注记录 -->
+        <div class="panel panel-pad history">
+          <div class="history-head">
+            <h2 class="section-title">投注记录（仅存本机）</h2>
+            <span v-if="profit.invested" class="num" :class="profit.net >= 0 ? 'win' : 'lose'">
+              已结算盈亏 {{ profit.net >= 0 ? "+" : "" }}{{ profit.net.toFixed(2) }} 元
+            </span>
+          </div>
+          <p v-if="!tickets.length" class="muted">保存的模拟票会显示在这里，可标记中奖结果统计盈亏。</p>
+          <div v-for="t in tickets" :key="t.id" class="ticket">
+            <div class="ticket-top">
+              <span class="num ticket-time">{{ t.time }}</span>
+              <span
+                class="tag"
+                :class="{ done: t.status === 'win', live: t.status === 'lose' }"
+              >{{ t.status === "win" ? "已中奖" : t.status === "lose" ? "未中奖" : "待开奖" }}</span>
+            </div>
+            <ul class="ticket-legs">
+              <li v-for="(l, j) in t.legs" :key="j">
+                {{ l.label }} · {{ l.pick }} <span class="num">@{{ Number(l.odds).toFixed(2) }}</span>
+              </li>
+            </ul>
+            <div class="ticket-bottom">
+              <span>{{ t.mode }} · 投入 <strong class="num">{{ t.invest }}</strong> 元 · 满额可中
+                <strong class="num gold-text">{{ fmt(t.payout) }}</strong> 元</span>
+              <span class="ticket-actions">
+                <button v-if="t.status === 'pending'" class="btn btn-sm" type="button" @click="setStatus(t, 'win')">中奖</button>
+                <button v-if="t.status === 'pending'" class="btn btn-sm" type="button" @click="setStatus(t, 'lose')">未中</button>
+                <button class="btn btn-ghost btn-sm" type="button" @click="removeTicket(t.id)">删除</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 结果面板：桌面侧栏 / 移动端底部常驻 -->
+      <aside>
+        <div class="panel panel-pad result-panel">
+          <h2 class="section-title">奖金试算</h2>
+          <div class="stake-row">
+            <label for="mult">倍数（每注 {{ UNIT_PRICE }} 元）</label>
+            <input id="mult" v-model.number="multiplier" class="input num" type="number" min="1" step="1" inputmode="numeric">
+          </div>
+          <template v-if="result">
+            <div class="result-rows">
+              <div class="result-row"><span>方式</span><strong>{{ result.mode }}</strong></div>
+              <div class="result-row"><span>注数</span><strong class="num">{{ result.tickets }}</strong></div>
+              <div class="result-row"><span>总投入</span><strong class="num">{{ result.invest.toFixed(2) }} 元</strong></div>
+            </div>
+            <div class="payout">
+              <span>全中可得（含本金）</span>
+              <strong class="num">{{ fmt(Math.min(result.payout, PAYOUT_CAP)) }} 元</strong>
+            </div>
+            <p v-if="capped" class="cap-note">已触及单票 500 万元奖金上限，超出部分不予兑付。</p>
+            <button class="btn btn-gold save-btn" type="button" :disabled="!result.tickets" @click="saveTicket">
+              保存为模拟票
+            </button>
+          </template>
+          <p v-else class="muted">添加场次后开始计算。</p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- 场次选择抽屉 -->
+    <BottomSheet :open="sheetOpen" title="选择比赛（未开赛）" @close="sheetOpen = false">
+      <input
+        v-model="sheetSearch"
+        class="input"
+        type="search"
+        placeholder="搜索球队"
+        style="margin-bottom: 10px"
+      >
+      <div v-if="!candidates.length" class="muted" style="padding: 20px 0; text-align: center">
+        没有可选的比赛
+      </div>
+      <button
+        v-for="m in candidates"
+        :key="m.espn_event_id"
+        type="button"
+        class="candidate"
+        @click="addLeg(m)"
+      >
+        <span class="candidate-fixture">{{ m.fixture_zh }}</span>
+        <span class="candidate-meta num">{{ m.beijing_date }} {{ m.beijing_time }} · {{ m.stage_zh }}{{ m.group ? ` · ${m.group}组` : "" }}</span>
+      </button>
+    </BottomSheet>
+  </div>
+</template>
+
+<style scoped>
+h1 {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 850;
+}
+
+.subtitle {
+  margin: 6px 0 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.main-col {
+  display: grid;
+  gap: 12px;
+}
+
+.empty-state {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  padding: 36px 16px;
+  color: var(--muted);
+}
+
+.leg {
+  padding: 14px;
+}
+
+.leg-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.leg-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  min-width: 0;
+}
+
+.leg-meta {
+  margin-top: 4px;
+  color: var(--faint);
+  font-size: 12px;
+}
+
+.leg-controls {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 96px;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .leg-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .leg-controls input {
+    grid-column: 1 / 3;
+  }
+}
+
+.add-more {
+  justify-self: start;
+}
+
+.size-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.size-pill {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-height: 48px;
+  padding: 7px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--ink);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.size-pill .combos {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--faint);
+}
+
+.size-pill.active {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+  color: var(--gold);
+}
+
+.size-pill.active .combos {
+  color: var(--gold-deep);
+}
+
+/* 结果面板 */
+.result-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.stake-row {
+  display: grid;
+  gap: 6px;
+}
+
+.stake-row label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.result-rows {
+  display: grid;
+  gap: 8px;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.result-row strong {
+  color: var(--ink);
+  text-align: right;
+}
+
+.payout {
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--gold-dim);
+  border: 1px solid rgba(233, 187, 79, 0.35);
+  display: grid;
+  gap: 4px;
+}
+
+.payout span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.payout strong {
+  font-size: 30px;
+  line-height: 1.1;
+  color: var(--gold);
+}
+
+.cap-note {
+  color: var(--red);
+  font-size: 12px;
+}
+
+.save-btn {
+  width: 100%;
+}
+
+/* 移动端：结果面板排在最上方，随时可见 */
+@media (max-width: 1279px) {
+  aside {
+    order: -1;
+  }
+}
+
+/* 投注记录 */
+.history {
+  display: grid;
+  gap: 10px;
+}
+
+.history-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.win { color: var(--red); font-weight: 800; }
+.lose { color: var(--green); font-weight: 800; }
+
+.ticket {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  padding: 11px 12px;
+  display: grid;
+  gap: 7px;
+  background: var(--bg-soft);
+}
+
+.ticket-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.ticket-time {
+  color: var(--faint);
+  font-size: 12px;
+}
+
+.ticket-legs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 3px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.ticket-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.gold-text {
+  color: var(--gold);
+}
+
+.ticket-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.muted {
+  color: var(--faint);
+  font-size: 13px;
+}
+
+/* 抽屉里的候选比赛 */
+.candidate {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line-soft);
+  padding: 11px 2px;
+  cursor: pointer;
+}
+
+.candidate:hover {
+  background: var(--panel-2);
+}
+
+.candidate-fixture {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.candidate-meta {
+  color: var(--faint);
+  font-size: 12px;
+}
+</style>

@@ -1,0 +1,33 @@
+:root {
+  color-scheme: dark;
+
+  /* 深色基底：球场夜赛氛围 */
+  --bg: #0a111f;
+  --bg-soft: #0d1626;
+  --panel: #121d33;
+  --panel-2: #182640;
+  --line: #243454;
+  --line-soft: #1c2a45;
+
+  /* 文字层级 */
+  --ink: #e9eef7;
+  --muted: #94a2bc;
+  --faint: #5f6e8c;
+
+  /* 世界杯金：比分、奖金、关键按钮 */
+  --gold: #e9bb4f;
+  --gold-deep: #caa233;
+  --gold-dim: rgba(233, 187, 79, 0.14);
+
+  /* 三国点缀色：墨西哥绿 / 加拿大红 / 美国蓝 */
+  --green: #37a872;
+  --red: #d8554c;
+  --blue: #4d86d6;
+  --green-dim: rgba(55, 168, 114, 0.16);
+  --red-dim: rgba(216, 85, 76, 0.16);
+  --blue-dim: rgba(77, 134, 214, 0.16);
+
+  --radius: 8px;
+  --nav-h: 56px;
+  --tab-h: 58px;
+}
