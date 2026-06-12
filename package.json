@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "fetch:schedule": "node scripts/fetch_worldcup_schedule.mjs",
     "fetch:odds": "node scripts/fetch_odds.mjs",
-    "fetch": "node scripts/fetch_worldcup_schedule.mjs && node scripts/fetch_odds.mjs"
+    "fetch": "node scripts/fetch_worldcup_schedule.mjs && node scripts/fetch_odds.mjs",
+    "deploy:oss": "node scripts/deploy_oss.mjs"
   },
   "dependencies": {
     "marked": "^18.0.5",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.7",
+    "ali-oss": "^6.23.0",
     "puppeteer-core": "^25.1.0",
     "vite": "^8.0.16"
   }
