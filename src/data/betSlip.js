@@ -46,7 +46,15 @@ function makeLeg(match, playId, pick, odds) {
     playId,
     pick,
     odds,
+    mult: 1,
   };
+}
+
+/** 旧数据补全单项倍数 */
+export function ensureLegMults() {
+  for (const leg of legs) {
+    if (!leg.mult || leg.mult < 1) leg.mult = 1;
+  }
 }
 
 /**

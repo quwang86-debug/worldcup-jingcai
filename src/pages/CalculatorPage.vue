@@ -3,15 +3,14 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { matchById, upcomingMatches } from "../data/matches.js";
 import { PLAY_TYPES, playTypeById } from "../data/playTypes.js";
-import { MAX_MATCHES, addMatchDefault, legs, legsFor, removeLegAt, removeMatch } from "../data/betSlip.js";
-import { calcParlay, groupLegsByMatch, ticketsForParlaySize, uniqueMatchCount } from "../data/parlayMath.js";
+import { MAX_MATCHES, addMatchDefault, ensureLegMults, legs, legsFor, removeLegAt, removeMatch } from "../data/betSlip.js";
+import { calcParlay, clampMult, groupLegsByMatch, ticketsForParlaySize, uniqueMatchCount, UNIT_PRICE } from "../data/parlayMath.js";
 import BottomSheet from "../components/BottomSheet.vue";
 import GroupPill from "../components/GroupPill.vue";
 
 const route = useRoute();
 
-const UNIT_PRICE = 2; // 每注 2 元
-const PAYOUT_CAP = 5_000_000; // 竞彩单票最高奖金限额
+const PAYOUT_CAP = 5_000_000;
 
 /* ---------- 场次（腿）管理：与全局选注单共享 ---------- */
 
@@ -54,6 +53,7 @@ function onPickChange(leg) {
 }
 
 onMounted(() => {
+  ensureLegMults();
   const id = route.query.add;
   if (id) {
     const match = matchById(id);
@@ -63,7 +63,7 @@ onMounted(() => {
 
 /* ---------- 过关方式与奖金计算 ---------- */
 
-const multiplier = ref(1);
+const globalMult = ref(1);
 const selectedSizes = ref(new Set());
 
 const sizeOptions = computed(() => {
@@ -95,11 +95,16 @@ function toggleSize(m) {
   selectedSizes.value = next;
 }
 
-const result = computed(() => {
-  const stake = UNIT_PRICE * Math.max(1, Math.floor(multiplier.value) || 1);
-  const sizes = [...selectedSizes.value];
-  return calcParlay(legs, sizes, stake);
-});
+const result = computed(() => calcParlay(legs, [...selectedSizes.value], globalMult.value));
+
+function applyGlobalToLegs() {
+  const m = clampMult(globalMult.value);
+  for (const leg of legs) leg.mult = m;
+}
+
+function onLegMultInput(leg) {
+  leg.mult = clampMult(leg.mult);
+}
 
 const capped = computed(() => result.value && result.value.payout > PAYOUT_CAP);
 
@@ -120,7 +125,13 @@ function saveTicket() {
   tickets.value.unshift({
     id: Date.now(),
     time: new Date().toLocaleString("zh-CN", { hour12: false }),
-    legs: legs.map((l) => ({ label: l.label, pick: l.pick, odds: l.odds })),
+    legs: legs.map((l) => ({
+      label: l.label,
+      pick: l.pick,
+      odds: l.odds,
+      mult: clampMult(l.mult),
+    })),
+    globalMult: clampMult(globalMult.value),
     mode: result.value.mode,
     invest: result.value.invest,
     payout: Math.min(result.value.payout, PAYOUT_CAP),
@@ -164,41 +175,63 @@ const profit = computed(() => {
           <button class="btn btn-gold" type="button" @click="sheetOpen = true">+ 添加场次</button>
         </div>
 
-        <div v-for="g in groupedLegs" :key="g.matchId" class="panel leg">
-          <div class="leg-head">
-            <div class="leg-title">
-              <GroupPill v-if="g.group" :group="g.group" />
-              <strong>{{ g.label }}</strong>
-              <span v-if="g.picks.length > 1" class="dup-tag">{{ g.picks.length }}项复式</span>
+        <template v-else>
+          <div class="panel legs-panel">
+            <div v-for="g in groupedLegs" :key="g.matchId" class="leg">
+              <div class="leg-head">
+                <div class="leg-title">
+                  <GroupPill v-if="g.group" :group="g.group" />
+                  <strong>{{ g.label }}</strong>
+                  <span v-if="g.picks.length > 1" class="dup-tag">{{ g.picks.length }}项复式</span>
+                </div>
+                <button class="btn btn-ghost btn-sm" type="button" @click="removeMatch(g.matchId)">移除本场</button>
+              </div>
+              <div class="leg-meta num">{{ g.date }}</div>
+              <div class="leg-pick-head">
+                <span>玩法</span>
+                <span>投注选项</span>
+                <span>赔率</span>
+                <span>下注倍数</span>
+                <span class="leg-pick-head-action">操作</span>
+              </div>
+              <div v-for="(leg, pi) in g.picks" :key="`${leg.playId}-${leg.pick}`" class="leg-pick-row">
+                <select v-model="leg.playId" class="select" @change="onPlayChange(leg)">
+                  <option v-for="p in PLAY_TYPES" :key="p.id" :value="p.id">{{ p.label }}</option>
+                </select>
+                <select v-model="leg.pick" class="select" @change="onPickChange(leg)">
+                  <option v-for="o in legOptions(leg)" :key="o.pick" :value="o.pick">{{ o.pick }}</option>
+                </select>
+                <input
+                  v-model.number="leg.odds"
+                  class="input num odds-input"
+                  type="number"
+                  step="0.01"
+                  min="1"
+                  inputmode="decimal"
+                  aria-label="赔率"
+                >
+                <input
+                  v-model.number="leg.mult"
+                  class="input num mult-input"
+                  type="number"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
+                  aria-label="倍数"
+                  title="单项倍数"
+                  @change="onLegMultInput(leg)"
+                >
+                <button
+                  class="btn btn-ghost btn-sm"
+                  type="button"
+                  @click="removeLegAt(legs.indexOf(leg))"
+                >
+                  删
+                </button>
+              </div>
             </div>
-            <button class="btn btn-ghost btn-sm" type="button" @click="removeMatch(g.matchId)">移除本场</button>
           </div>
-          <div class="leg-meta num">{{ g.date }}</div>
-          <div v-for="(leg, pi) in g.picks" :key="`${leg.playId}-${leg.pick}`" class="leg-pick-row">
-            <select v-model="leg.playId" class="select" @change="onPlayChange(leg)">
-              <option v-for="p in PLAY_TYPES" :key="p.id" :value="p.id">{{ p.label }}</option>
-            </select>
-            <select v-model="leg.pick" class="select" @change="onPickChange(leg)">
-              <option v-for="o in legOptions(leg)" :key="o.pick" :value="o.pick">{{ o.pick }}</option>
-            </select>
-            <input
-              v-model.number="leg.odds"
-              class="input num odds-input"
-              type="number"
-              step="0.01"
-              min="1"
-              inputmode="decimal"
-              aria-label="赔率"
-            >
-            <button
-              class="btn btn-ghost btn-sm"
-              type="button"
-              @click="removeLegAt(legs.indexOf(leg))"
-            >
-              删
-            </button>
-          </div>
-        </div>
+        </template>
 
         <button
           v-if="legs.length && matchCount < MAX_MATCHES"
@@ -246,7 +279,9 @@ const profit = computed(() => {
             </div>
             <ul class="ticket-legs">
               <li v-for="(l, j) in t.legs" :key="j">
-                {{ l.label }} · {{ l.pick }} <span class="num">@{{ Number(l.odds).toFixed(2) }}</span>
+                {{ l.label }} · {{ l.pick }}
+                <span class="num">@{{ Number(l.odds).toFixed(2) }}</span>
+                <span v-if="l.mult > 1" class="num">×{{ l.mult }}</span>
               </li>
             </ul>
             <div class="ticket-bottom">
@@ -267,9 +302,22 @@ const profit = computed(() => {
         <div class="panel panel-pad result-panel">
           <h2 class="section-title">奖金试算</h2>
           <div class="stake-row">
-            <label for="mult">倍数（每注 {{ UNIT_PRICE }} 元）</label>
-            <input id="mult" v-model.number="multiplier" class="input num" type="number" min="1" step="1" inputmode="numeric">
+            <label for="global-mult">合计倍数</label>
+            <div class="stake-controls">
+              <input
+                id="global-mult"
+                v-model.number="globalMult"
+                class="input num"
+                type="number"
+                min="1"
+                step="1"
+                inputmode="numeric"
+                @change="globalMult = clampMult(globalMult)"
+              >
+              <button class="btn btn-sm" type="button" @click="applyGlobalToLegs">应用到每项</button>
+            </div>
           </div>
+          <p class="stake-hint">每注 {{ UNIT_PRICE }} 元 · 实际投入 = 注数 × {{ UNIT_PRICE }} × 单项倍数 × 合计倍数</p>
           <template v-if="result">
             <div class="result-rows">
               <div class="result-row"><span>方式</span><strong>{{ result.mode }}</strong></div>
@@ -342,8 +390,18 @@ h1 {
   color: var(--muted);
 }
 
+.legs-panel {
+  padding: 16px;
+}
+
 .leg {
-  padding: 14px;
+  padding-top: 14px;
+}
+
+.leg + .leg {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
 }
 
 .leg-head {
@@ -373,29 +431,71 @@ h1 {
   font-weight: 700;
 }
 
+.leg-pick-head,
 .leg-pick-row {
-  margin-top: 8px;
   display: grid;
-  grid-template-columns: 1fr 1fr 80px auto;
+  grid-template-columns: 1fr 1fr 76px 72px auto;
   gap: 8px;
   align-items: center;
 }
 
-.leg-pick-row .odds-input {
+.leg-pick-head {
+  margin-top: 12px;
+  padding-bottom: 6px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.leg-pick-head span:nth-child(3),
+.leg-pick-head span:nth-child(4) {
+  text-align: center;
+}
+
+.leg-pick-row {
+  margin-top: 8px;
+}
+
+.leg-pick-row .select,
+.leg-pick-row .input {
+  font-size: 14px;
+}
+
+.leg-pick-row .odds-input,
+.leg-pick-row .mult-input {
   min-width: 0;
 }
 
+.mult-input {
+  text-align: center;
+}
+
 @media (max-width: 480px) {
+  .leg-pick-head,
   .leg-pick-row {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 68px 64px;
+  }
+
+  .leg-pick-head span:nth-child(3),
+  .leg-pick-head span:nth-child(4) {
+    text-align: center;
+  }
+
+  .leg-pick-head-action {
+    display: none;
   }
 
   .leg-pick-row .odds-input {
     grid-column: 1 / 2;
   }
 
-  .leg-pick-row .btn {
+  .leg-pick-row .mult-input {
     grid-column: 2 / 3;
+  }
+
+  .leg-pick-row .btn {
+    grid-column: 3 / 5;
+    justify-self: end;
   }
 }
 
@@ -472,6 +572,24 @@ h1 {
   color: var(--muted);
   font-size: 12px;
   font-weight: 700;
+}
+
+.stake-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.stake-controls .input {
+  width: 88px;
+  flex-shrink: 0;
+}
+
+.stake-hint {
+  margin: 0;
+  color: var(--faint);
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 .result-rows {
