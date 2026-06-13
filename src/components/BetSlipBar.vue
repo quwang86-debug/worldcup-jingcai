@@ -1,21 +1,26 @@
 <script setup>
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { MAX_LEGS, clearSlip, legs } from "../data/betSlip.js";
+import { MAX_MATCHES, clearSlip, legs } from "../data/betSlip.js";
+import { uniqueMatchCount } from "../data/parlayMath.js";
 
 const route = useRoute();
 
 const visible = computed(() => legs.length > 0 && route.path !== "/calculator");
+const matchCount = computed(() => uniqueMatchCount(legs));
+const pickCount = computed(() => legs.length);
 
-/* 方案栏出现时给页面底部留出空间，避免遮挡列表末尾 */
+const modeText = computed(() => {
+  if (!pickCount.value) return "";
+  if (matchCount.value === 1 && pickCount.value > 1) return `单关·${pickCount.value}注`;
+  if (matchCount.value > 1) return `${matchCount.value}串1 · ${pickCount.value}项`;
+  return `单关 ${Number(legs[0]?.odds || 1).toFixed(2)}`;
+});
+
 watch(
   visible,
   (v) => document.body.classList.toggle("has-slip", v),
   { immediate: true }
-);
-const product = computed(() => legs.reduce((acc, l) => acc * (Number(l.odds) || 1), 1));
-const modeText = computed(() =>
-  legs.length > 1 ? `${legs.length}串1 赔率 ${product.value.toFixed(2)}` : `单关 赔率 ${product.value.toFixed(2)}`
 );
 </script>
 
@@ -23,9 +28,9 @@ const modeText = computed(() =>
   <Transition name="slip">
     <div v-if="visible" class="slip-bar">
       <div class="slip-info">
-        <span class="count"><strong class="num">{{ legs.length }}</strong>/{{ MAX_LEGS }} 场</span>
+        <span class="count"><strong class="num">{{ matchCount }}</strong>/{{ MAX_MATCHES }} 场</span>
         <span class="mode num">{{ modeText }}</span>
-        <span v-if="legs.length >= MAX_LEGS" class="full">已满</span>
+        <span v-if="matchCount >= MAX_MATCHES" class="full">已满</span>
       </div>
       <button class="btn btn-ghost btn-sm" type="button" @click="clearSlip">清空</button>
       <router-link to="/calculator" class="btn btn-gold btn-sm">生成方案</router-link>

@@ -3,7 +3,8 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { matchById, upcomingMatches } from "../data/matches.js";
 import { PLAY_TYPES, playTypeById } from "../data/playTypes.js";
-import { MAX_LEGS, addMatchDefault, legs, removeLegAt } from "../data/betSlip.js";
+import { MAX_MATCHES, addMatchDefault, legs, legsFor, removeLegAt, removeMatch } from "../data/betSlip.js";
+import { calcParlay, groupLegsByMatch, ticketsForParlaySize, uniqueMatchCount } from "../data/parlayMath.js";
 import BottomSheet from "../components/BottomSheet.vue";
 import GroupPill from "../components/GroupPill.vue";
 
@@ -20,19 +21,18 @@ const sheetSearch = ref("");
 const candidates = computed(() => {
   const q = sheetSearch.value.trim().toLowerCase();
   return upcomingMatches()
-    .filter((m) => !legs.some((l) => String(l.matchId) === String(m.espn_event_id)))
+    .filter((m) => !legsFor(m.espn_event_id).length)
     .filter((m) => !q || `${m.fixture_zh}${m.fixture}`.toLowerCase().includes(q))
     .slice(0, 40);
 });
+
+const groupedLegs = computed(() => groupLegsByMatch(legs));
+const matchCount = computed(() => uniqueMatchCount(legs));
 
 function addLeg(match) {
   addMatchDefault(match);
   sheetOpen.value = false;
   sheetSearch.value = "";
-}
-
-function removeLeg(index) {
-  removeLegAt(index);
 }
 
 function legOptions(leg) {
@@ -67,16 +67,16 @@ const multiplier = ref(1);
 const selectedSizes = ref(new Set());
 
 const sizeOptions = computed(() => {
-  const n = legs.length;
+  const n = matchCount.value;
   if (n < 2) return [];
   const sizes = [];
   for (let m = 2; m <= n; m++) sizes.push(m);
   return sizes;
 });
 
-/* 场次变化时清掉失效的过关方式；若一个都没选则默认 n 串 1，移动端少一步操作 */
+/* 场次变化时清掉失效的过关方式；默认 n 串 1 */
 watch(
-  () => legs.length,
+  matchCount,
   (n) => {
     const valid = [...selectedSizes.value].filter((m) => m >= 2 && m <= n);
     if (!valid.length && n >= 2) {
@@ -95,47 +95,10 @@ function toggleSize(m) {
   selectedSizes.value = next;
 }
 
-function choose(n, k) {
-  let r = 1;
-  for (let i = 1; i <= k; i++) r = (r * (n - i + 1)) / i;
-  return Math.round(r);
-}
-
-/** 各阶初等对称多项式：e[m] = 所有 m 场组合的赔率乘积之和 */
-const symSums = computed(() => {
-  let coef = [1];
-  for (const leg of legs) {
-    const odds = Number(leg.odds) || 0;
-    const next = [...coef, 0];
-    for (let i = coef.length; i > 0; i--) next[i] += coef[i - 1] * odds;
-    coef = next;
-  }
-  return coef;
-});
-
 const result = computed(() => {
-  const n = legs.length;
   const stake = UNIT_PRICE * Math.max(1, Math.floor(multiplier.value) || 1);
-
-  if (n === 0) return null;
-  if (n === 1) {
-    const odds = Number(legs[0].odds) || 0;
-    return { mode: "单关", tickets: 1, invest: stake, payout: odds * stake };
-  }
-
-  const sizes = [...selectedSizes.value].filter((m) => m >= 2 && m <= n);
-  if (!sizes.length) return { mode: "未选过关方式", tickets: 0, invest: 0, payout: 0 };
-
-  let tickets = 0;
-  let payout = 0;
-  for (const m of sizes) {
-    tickets += choose(n, m);
-    payout += (symSums.value[m] || 0) * stake;
-  }
-  const label = sizes.length === 1 && sizes[0] === n
-    ? `${n}串1`
-    : `${sizes.map((m) => `${m}串1`).join("+")} 组合（共${tickets}注）`;
-  return { mode: label, tickets, invest: tickets * stake, payout };
+  const sizes = [...selectedSizes.value];
+  return calcParlay(legs, sizes, stake);
 });
 
 const capped = computed(() => result.value && result.value.payout > PAYOUT_CAP);
@@ -191,7 +154,7 @@ const profit = computed(() => {
 <template>
   <div class="page calc-page">
     <h1>串关奖金计算器</h1>
-    <p class="subtitle">最多 {{ MAX_LEGS }} 场过关 · 赔率可手动修改 · 计算结果仅供参考</p>
+    <p class="subtitle">最多 {{ MAX_MATCHES }} 场过关 · 同场可多选复式 · 计算结果仅供参考</p>
 
     <div class="two-col">
       <section class="main-col">
@@ -201,16 +164,17 @@ const profit = computed(() => {
           <button class="btn btn-gold" type="button" @click="sheetOpen = true">+ 添加场次</button>
         </div>
 
-        <div v-for="(leg, i) in legs" :key="leg.matchId" class="panel leg">
+        <div v-for="g in groupedLegs" :key="g.matchId" class="panel leg">
           <div class="leg-head">
             <div class="leg-title">
-              <GroupPill v-if="leg.group" :group="leg.group" />
-              <strong>{{ leg.label }}</strong>
+              <GroupPill v-if="g.group" :group="g.group" />
+              <strong>{{ g.label }}</strong>
+              <span v-if="g.picks.length > 1" class="dup-tag">{{ g.picks.length }}项复式</span>
             </div>
-            <button class="btn btn-ghost btn-sm" type="button" @click="removeLeg(i)">移除</button>
+            <button class="btn btn-ghost btn-sm" type="button" @click="removeMatch(g.matchId)">移除本场</button>
           </div>
-          <div class="leg-meta num">{{ leg.date }}</div>
-          <div class="leg-controls">
+          <div class="leg-meta num">{{ g.date }}</div>
+          <div v-for="(leg, pi) in g.picks" :key="`${leg.playId}-${leg.pick}`" class="leg-pick-row">
             <select v-model="leg.playId" class="select" @change="onPlayChange(leg)">
               <option v-for="p in PLAY_TYPES" :key="p.id" :value="p.id">{{ p.label }}</option>
             </select>
@@ -219,23 +183,30 @@ const profit = computed(() => {
             </select>
             <input
               v-model.number="leg.odds"
-              class="input num"
+              class="input num odds-input"
               type="number"
               step="0.01"
               min="1"
               inputmode="decimal"
               aria-label="赔率"
             >
+            <button
+              class="btn btn-ghost btn-sm"
+              type="button"
+              @click="removeLegAt(legs.indexOf(leg))"
+            >
+              删
+            </button>
           </div>
         </div>
 
         <button
-          v-if="legs.length && legs.length < MAX_LEGS"
+          v-if="legs.length && matchCount < MAX_MATCHES"
           class="btn add-more"
           type="button"
           @click="sheetOpen = true"
         >
-          + 添加场次（{{ legs.length }}/{{ MAX_LEGS }}）
+          + 添加场次（{{ matchCount }}/{{ MAX_MATCHES }}）
         </button>
 
         <!-- 过关方式 -->
@@ -251,7 +222,7 @@ const profit = computed(() => {
               @click="toggleSize(m)"
             >
               {{ m }}串1
-              <span class="combos">{{ choose(legs.length, m) }}注</span>
+              <span class="combos">{{ ticketsForParlaySize(legs, m) }}注</span>
             </button>
           </div>
         </div>
@@ -310,6 +281,7 @@ const profit = computed(() => {
               <strong class="num">{{ fmt(Math.min(result.payout, PAYOUT_CAP)) }} 元</strong>
             </div>
             <p v-if="capped" class="cap-note">已触及单票 500 万元奖金上限，超出部分不予兑付。</p>
+            <p v-if="result.isSingleMulti" class="cap-note">同场多选为独立单关，展示为命中最高赔率项可得金额。</p>
             <button class="btn btn-gold save-btn" type="button" :disabled="!result.tickets" @click="saveTicket">
               保存为模拟票
             </button>
@@ -393,6 +365,38 @@ h1 {
   margin-top: 4px;
   color: var(--faint);
   font-size: 12px;
+}
+
+.dup-tag {
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.leg-pick-row {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 80px auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.leg-pick-row .odds-input {
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .leg-pick-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .leg-pick-row .odds-input {
+    grid-column: 1 / 2;
+  }
+
+  .leg-pick-row .btn {
+    grid-column: 2 / 3;
+  }
 }
 
 .leg-controls {

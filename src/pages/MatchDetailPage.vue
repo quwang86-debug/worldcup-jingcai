@@ -5,7 +5,7 @@ import { marked } from "marked";
 import { groupStandings, matchById, teamPlayed } from "../data/matches.js";
 import { getOdds, hasRealOdds } from "../data/odds.js";
 import { PLAY_TYPES } from "../data/playTypes.js";
-import { addMatchDefault, isSelected, legFor, toggleSelection } from "../data/betSlip.js";
+import { addMatchDefault, isSelected, legsFor, toggleSelection } from "../data/betSlip.js";
 import { getReport } from "../mocks/reports.js";
 import GroupPill from "../components/GroupPill.vue";
 import CountdownTimer from "../components/CountdownTimer.vue";
@@ -44,7 +44,7 @@ const extraPlays = computed(() => {
 });
 
 const canPick = computed(() => match.value?.status_state === "pre");
-const inSlip = computed(() => Boolean(match.value && legFor(match.value.espn_event_id)));
+const inSlip = computed(() => Boolean(match.value && legsFor(match.value.espn_event_id).length));
 
 function toggle(playId, pick, oddsValue) {
   if (!canPick.value) return;
@@ -180,7 +180,7 @@ function addToCalculator() {
               · {{ hasRealOdds(match) ? "体彩官方" : "模拟数据" }}
             </span>
           </div>
-          <p v-if="canPick" class="pick-hint">点选赔率即可加入下注方案</p>
+          <p v-if="canPick" class="pick-hint">点选赔率加入方案，同场可多选（复式）</p>
           <div class="odds-row">
             <OddsBadge
               :value="odds.home"

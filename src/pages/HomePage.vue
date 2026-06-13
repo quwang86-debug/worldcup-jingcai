@@ -4,6 +4,7 @@ import {
   GROUPS,
   STAGE_ORDER,
   beijingDateKey,
+  displayMatch,
   matches,
   nextMatch,
 } from "../data/matches.js";
@@ -51,7 +52,7 @@ const grouped = computed(() => {
 });
 
 const total = matches.length;
-const finished = computed(() => matches.filter((m) => m.status_state === "post").length);
+const finished = computed(() => matches.filter((m) => displayMatch(m).status_state === "post").length);
 const todayCount = computed(() => {
   const today = beijingDateKey();
   return matches.filter((m) => m.beijing_date === today).length;

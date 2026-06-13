@@ -1,4 +1,5 @@
 import schedule from "../../data/worldcup_2026_matches_beijing.json";
+import { mergeLiveMatch } from "./liveScores.js";
 
 export const matches = schedule.matches;
 export const fetchedAt = schedule.fetched_at;
@@ -6,8 +7,14 @@ export const fetchedAt = schedule.fetched_at;
 export const STAGE_ORDER = ["小组赛", "1/16决赛", "1/8决赛", "1/4决赛", "半决赛", "三四名决赛", "决赛"];
 export const GROUPS = "ABCDEFGHIJKL".split("");
 
+/** 合并 ESPN 实时比分后的场次（用于展示） */
+export function displayMatch(match) {
+  return mergeLiveMatch(match);
+}
+
 export function matchById(id) {
-  return matches.find((m) => String(m.espn_event_id) === String(id));
+  const m = matches.find((m) => String(m.espn_event_id) === String(id));
+  return m ? displayMatch(m) : null;
 }
 
 export function beijingNow() {
@@ -25,23 +32,30 @@ export function beijingDateKey(date = new Date()) {
 
 export function upcomingMatches() {
   const now = beijingNow();
-  return matches.filter((m) => m.status_state === "pre" && new Date(m.beijing_datetime) >= now);
+  return matches
+    .filter((m) => {
+      const d = displayMatch(m);
+      return d.status_state === "pre" && new Date(d.beijing_datetime) >= now;
+    })
+    .map(displayMatch);
 }
 
 export function nextMatch() {
-  return upcomingMatches()[0] ?? matches[matches.length - 1];
+  return upcomingMatches()[0] ?? displayMatch(matches[matches.length - 1]);
 }
 
 /** 某支球队本届已赛场次（含进行中） */
 export function teamPlayed(teamZh) {
-  return matches.filter(
-    (m) => m.status_state !== "pre" && (m.home_team_zh === teamZh || m.away_team_zh === teamZh)
-  );
+  return matches
+    .map(displayMatch)
+    .filter(
+      (m) => m.status_state !== "pre" && (m.home_team_zh === teamZh || m.away_team_zh === teamZh)
+    );
 }
 
 /** 小组积分榜：从已完赛的小组赛比分实时计算 */
 export function groupStandings(group) {
-  const groupMatches = matches.filter((m) => m.group === group);
+  const groupMatches = matches.map(displayMatch).filter((m) => m.group === group);
   const table = new Map();
 
   for (const m of groupMatches) {

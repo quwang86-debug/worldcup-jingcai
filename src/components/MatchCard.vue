@@ -1,50 +1,52 @@
 <script setup>
+import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { displayMatch } from "../data/matches.js";
 import GroupPill from "./GroupPill.vue";
 
 const props = defineProps({
   match: { type: Object, required: true },
-  /** compact: 列表行模式；false 时渲染为独立卡片 */
   compact: { type: Boolean, default: true },
 });
 
 const router = useRouter();
+const m = computed(() => displayMatch(props.match));
 
 function open() {
   router.push(`/match/${props.match.espn_event_id}`);
 }
 
-function scoreText(m) {
-  if (m.home_score === null || m.away_score === null) return "未赛";
-  return `${m.home_score} : ${m.away_score}`;
+function scoreText(match) {
+  if (match.home_score === null || match.away_score === null) return "未赛";
+  return `${match.home_score} : ${match.away_score}`;
 }
 </script>
 
 <template>
-  <article class="match-card" :class="{ live: match.status_state === 'in' }" @click="open">
-    <div class="time num">{{ match.beijing_time }}</div>
+  <article class="match-card" :class="{ live: m.status_state === 'in' }" @click="open">
+    <div class="time num">{{ m.beijing_time }}</div>
 
     <div class="status">
-      <span v-if="match.status_state === 'in'" class="tag live"><span class="pulse-dot" />进行中</span>
-      <span v-else-if="match.status_state === 'post'" class="tag done">已完赛</span>
+      <span v-if="m.status_state === 'in'" class="tag live"><span class="pulse-dot" />进行中</span>
+      <span v-else-if="m.status_state === 'post'" class="tag done">已完赛</span>
       <span v-else class="tag">未开赛</span>
     </div>
 
     <div class="teams">
-      <div class="fixture">{{ match.fixture_zh }}</div>
+      <div class="fixture">{{ m.fixture_zh }}</div>
       <div class="meta">
-        <GroupPill v-if="match.group" :group="match.group" />
-        <span>{{ match.stage_zh }}</span>
-        <span class="abbr">{{ match.home_team_abbr }} vs {{ match.away_team_abbr }}</span>
+        <GroupPill v-if="m.group" :group="m.group" />
+        <span>{{ m.stage_zh }}</span>
+        <span class="abbr">{{ m.home_team_abbr }} vs {{ m.away_team_abbr }}</span>
       </div>
     </div>
 
-    <div class="score num" :class="{ pending: match.status_state === 'pre' }">
-      {{ scoreText(match) }}
+    <div class="score num" :class="{ pending: m.status_state === 'pre' }">
+      {{ scoreText(m) }}
     </div>
 
     <div class="venue">
-      {{ match.venue }}<br>{{ match.city }}, {{ match.country }}
+      {{ m.venue }}<br>{{ m.city }}, {{ m.country }}
     </div>
   </article>
 </template>

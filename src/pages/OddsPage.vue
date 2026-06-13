@@ -59,7 +59,7 @@ function pickOption(match, option) {
       <div>
         <h1>赔率中心</h1>
         <p class="subtitle">
-          点选赔率即可加入下注方案 · 红涨绿跌
+          点选赔率加入方案，同场可多选 · 红涨绿跌
           <span v-if="realCount" class="source-tag">已接入 {{ realCount }} 场体彩官方数据</span>
         </p>
       </div>
