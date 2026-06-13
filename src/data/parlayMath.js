@@ -1,4 +1,4 @@
-/** 串关复式注数与奖金（总投入 = Σ(每项下注倍数×2×合计倍数)） */
+/** 串关复式注数与奖金（总投入 = Σ(每项下注倍数×2)，合计倍数仅用于批量覆盖单项倍数） */
 
 export const UNIT_PRICE = 2;
 
@@ -6,12 +6,11 @@ export function clampMult(v) {
   return Math.max(1, Math.floor(Number(v)) || 1);
 }
 
-/** 总投入：每个单项下注倍数 × 2，再相加 */
-export function investFromLegs(legs, globalMult = 1) {
-  const gMult = clampMult(globalMult);
+/** 总投入：每个单项下注倍数 × 2，再相加（不含合计倍数） */
+export function investFromLegs(legs) {
   let invest = 0;
   for (const leg of legs) {
-    invest += UNIT_PRICE * clampMult(leg.mult) * gMult;
+    invest += UNIT_PRICE * clampMult(leg.mult);
   }
   return invest;
 }
@@ -78,45 +77,42 @@ export function ticketsInCombo(lengthsPerGroup, groupIndices) {
   return t;
 }
 
-/** 串关某一过关组合的注数与奖金（每注 2 元 × 合计倍数） */
-function sumCombo(picksPerGroup, groupIndices, globalMult) {
-  const gMult = clampMult(globalMult);
-  const stake = UNIT_PRICE * gMult;
+/** 串关某一过关组合的注数与奖金（本金 = 该组合内各项下注倍数×2 之和） */
+function sumCombo(picksPerGroup, groupIndices) {
   let tickets = 0;
   let payout = 0;
   const groupsPicks = groupIndices.map((i) => picksPerGroup[i]);
 
-  function dfs(depth, oddsProduct) {
+  function dfs(depth, oddsProduct, pickedMults) {
     if (depth === groupsPicks.length) {
       tickets += 1;
+      const stake = pickedMults.reduce((s, m) => s + UNIT_PRICE * m, 0);
       payout += oddsProduct * stake;
       return;
     }
     for (const p of groupsPicks[depth]) {
-      dfs(depth + 1, oddsProduct * p.odds);
+      dfs(depth + 1, oddsProduct * p.odds, [...pickedMults, p.mult]);
     }
   }
-  dfs(0, 1);
+  dfs(0, 1, []);
   return { tickets, payout };
 }
 
 /**
- * @param {Array} legs 扁平选注列表（每项可有 mult）
+ * @param {Array} legs 扁平选注列表（每项 mult 为下注倍数）
  * @param {number[]} selectedSizes 过关阶数
- * @param {number} globalMult 合计倍数
  */
-export function calcParlay(legs, selectedSizes, globalMult = 1) {
+export function calcParlay(legs, selectedSizes) {
   const groups = picksPerGroup(legs);
   const n = groups.length;
-  const gMult = clampMult(globalMult);
   if (!n) return null;
 
   if (n === 1) {
     const picks = groups[0];
-    const invest = investFromLegs(legs, gMult);
+    const invest = investFromLegs(legs);
     let maxPayout = 0;
     for (const p of picks) {
-      const stake = UNIT_PRICE * p.mult * gMult;
+      const stake = UNIT_PRICE * p.mult;
       maxPayout = Math.max(maxPayout, p.odds * stake);
     }
     return {
@@ -125,33 +121,32 @@ export function calcParlay(legs, selectedSizes, globalMult = 1) {
       invest,
       payout: maxPayout,
       isSingleMulti: picks.length > 1,
-      globalMult: gMult,
     };
   }
 
   const sizes = [...selectedSizes].filter((m) => m >= 2 && m <= n);
   if (!sizes.length) {
-    return { mode: "未选过关方式", tickets: 0, invest: 0, payout: 0, globalMult: gMult };
+    return { mode: "未选过关方式", tickets: 0, invest: 0, payout: 0 };
   }
 
   let tickets = 0;
   let payout = 0;
   for (const m of sizes) {
     for (const combo of indexCombinations(n, m)) {
-      const part = sumCombo(groups, combo, gMult);
+      const part = sumCombo(groups, combo);
       tickets += part.tickets;
       payout += part.payout;
     }
   }
 
-  const invest = investFromLegs(legs, gMult);
+  const invest = investFromLegs(legs);
 
   const label =
     sizes.length === 1 && sizes[0] === n
       ? `${n}串1${tickets > choose(n, n) ? `·复式${tickets}注` : ""}`
       : `${sizes.map((m) => `${m}串1`).join("+")}（共${tickets}注）`;
 
-  return { mode: label, tickets, invest, payout, globalMult: gMult };
+  return { mode: label, tickets, invest, payout };
 }
 
 export function ticketsForParlaySize(legs, m) {

@@ -95,7 +95,7 @@ function toggleSize(m) {
   selectedSizes.value = next;
 }
 
-const result = computed(() => calcParlay(legs, [...selectedSizes.value], globalMult.value));
+const result = computed(() => calcParlay(legs, [...selectedSizes.value]));
 
 function applyGlobalToLegs() {
   const m = clampMult(globalMult.value);
@@ -318,8 +318,7 @@ const profit = computed(() => {
             </div>
           </div>
           <p class="stake-hint">
-            总投入 = 各选项下注倍数 × {{ UNIT_PRICE }} 之和
-            <template v-if="globalMult > 1"> × 合计倍数 {{ globalMult }}</template>
+            总投入 = 各选项下注倍数 × {{ UNIT_PRICE }} 之和。合计倍数点「应用到每项」后写入各行下注倍数，本身不参与计算。
           </p>
           <template v-if="result">
             <div class="result-rows">
