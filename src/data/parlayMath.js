@@ -1,4 +1,4 @@
-/** 串关复式注数与奖金计算（同场可多选，支持单项倍数 + 合计倍数） */
+/** 串关复式注数与奖金（体彩规则：串关按注数×2×合计倍数；单关按每项下注倍数×合计倍数） */
 
 export const UNIT_PRICE = 2;
 
@@ -64,31 +64,31 @@ function picksPerGroup(legs) {
 
 export function ticketsInCombo(lengthsPerGroup, groupIndices) {
   let t = 1;
-  for (const i of groupIndices) t *= lengthsPerGroup[i].length;
+  for (const i of groupIndices) t *= lengthsPerGroup[i];
   return t;
 }
 
-/** 串关某一过关组合：注数、投入、奖金（含单项倍数与合计倍数） */
+/** 串关单注投入与奖金（体彩：每注 2 元 × 合计倍数，不按单项倍数相乘） */
 function sumCombo(picksPerGroup, groupIndices, globalMult) {
   const gMult = clampMult(globalMult);
+  const stake = UNIT_PRICE * gMult;
   let tickets = 0;
   let invest = 0;
   let payout = 0;
   const groupsPicks = groupIndices.map((i) => picksPerGroup[i]);
 
-  function dfs(depth, oddsProduct, multProduct) {
+  function dfs(depth, oddsProduct) {
     if (depth === groupsPicks.length) {
       tickets += 1;
-      const stake = UNIT_PRICE * multProduct * gMult;
       invest += stake;
       payout += oddsProduct * stake;
       return;
     }
     for (const p of groupsPicks[depth]) {
-      dfs(depth + 1, oddsProduct * p.odds, multProduct * p.mult);
+      dfs(depth + 1, oddsProduct * p.odds);
     }
   }
-  dfs(0, 1, 1);
+  dfs(0, 1);
   return { tickets, invest, payout };
 }
 

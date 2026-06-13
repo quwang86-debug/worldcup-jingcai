@@ -317,7 +317,14 @@ const profit = computed(() => {
               <button class="btn btn-sm" type="button" @click="applyGlobalToLegs">应用到每项</button>
             </div>
           </div>
-          <p class="stake-hint">每注 {{ UNIT_PRICE }} 元 · 实际投入 = 注数 × {{ UNIT_PRICE }} × 单项倍数 × 合计倍数</p>
+          <p class="stake-hint">
+            <template v-if="matchCount < 2">
+              每注 {{ UNIT_PRICE }} 元 · 总投入 = 各选项 {{ UNIT_PRICE }} × 下注倍数 × 合计倍数 之和
+            </template>
+            <template v-else>
+              每注 {{ UNIT_PRICE }} 元 · 串关总投入 = 注数 × {{ UNIT_PRICE }} × 合计倍数
+            </template>
+          </p>
           <template v-if="result">
             <div class="result-rows">
               <div class="result-row"><span>方式</span><strong>{{ result.mode }}</strong></div>
