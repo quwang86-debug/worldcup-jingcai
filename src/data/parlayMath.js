@@ -1,9 +1,19 @@
-/** 串关复式注数与奖金（体彩规则：串关按注数×2×合计倍数；单关按每项下注倍数×合计倍数） */
+/** 串关复式注数与奖金（总投入 = Σ(每项下注倍数×2×合计倍数)） */
 
 export const UNIT_PRICE = 2;
 
 export function clampMult(v) {
   return Math.max(1, Math.floor(Number(v)) || 1);
+}
+
+/** 总投入：每个单项下注倍数 × 2，再相加 */
+export function investFromLegs(legs, globalMult = 1) {
+  const gMult = clampMult(globalMult);
+  let invest = 0;
+  for (const leg of legs) {
+    invest += UNIT_PRICE * clampMult(leg.mult) * gMult;
+  }
+  return invest;
 }
 
 export function groupLegsByMatch(legs) {
@@ -68,19 +78,17 @@ export function ticketsInCombo(lengthsPerGroup, groupIndices) {
   return t;
 }
 
-/** 串关单注投入与奖金（体彩：每注 2 元 × 合计倍数，不按单项倍数相乘） */
+/** 串关某一过关组合的注数与奖金（每注 2 元 × 合计倍数） */
 function sumCombo(picksPerGroup, groupIndices, globalMult) {
   const gMult = clampMult(globalMult);
   const stake = UNIT_PRICE * gMult;
   let tickets = 0;
-  let invest = 0;
   let payout = 0;
   const groupsPicks = groupIndices.map((i) => picksPerGroup[i]);
 
   function dfs(depth, oddsProduct) {
     if (depth === groupsPicks.length) {
       tickets += 1;
-      invest += stake;
       payout += oddsProduct * stake;
       return;
     }
@@ -89,7 +97,7 @@ function sumCombo(picksPerGroup, groupIndices, globalMult) {
     }
   }
   dfs(0, 1);
-  return { tickets, invest, payout };
+  return { tickets, payout };
 }
 
 /**
@@ -105,11 +113,10 @@ export function calcParlay(legs, selectedSizes, globalMult = 1) {
 
   if (n === 1) {
     const picks = groups[0];
-    let invest = 0;
+    const invest = investFromLegs(legs, gMult);
     let maxPayout = 0;
     for (const p of picks) {
       const stake = UNIT_PRICE * p.mult * gMult;
-      invest += stake;
       maxPayout = Math.max(maxPayout, p.odds * stake);
     }
     return {
@@ -128,16 +135,16 @@ export function calcParlay(legs, selectedSizes, globalMult = 1) {
   }
 
   let tickets = 0;
-  let invest = 0;
   let payout = 0;
   for (const m of sizes) {
     for (const combo of indexCombinations(n, m)) {
       const part = sumCombo(groups, combo, gMult);
       tickets += part.tickets;
-      invest += part.invest;
       payout += part.payout;
     }
   }
+
+  const invest = investFromLegs(legs, gMult);
 
   const label =
     sizes.length === 1 && sizes[0] === n

@@ -318,12 +318,8 @@ const profit = computed(() => {
             </div>
           </div>
           <p class="stake-hint">
-            <template v-if="matchCount < 2">
-              每注 {{ UNIT_PRICE }} 元 · 总投入 = 各选项 {{ UNIT_PRICE }} × 下注倍数 × 合计倍数 之和
-            </template>
-            <template v-else>
-              每注 {{ UNIT_PRICE }} 元 · 串关总投入 = 注数 × {{ UNIT_PRICE }} × 合计倍数
-            </template>
+            总投入 = 各选项下注倍数 × {{ UNIT_PRICE }} 之和
+            <template v-if="globalMult > 1"> × 合计倍数 {{ globalMult }}</template>
           </p>
           <template v-if="result">
             <div class="result-rows">
