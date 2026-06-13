@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-13T18:17:52.825Z",
+  "fetched_at": "2026-06-13T20:23:11.969Z",
   "match_count": 104,
   "matches": [
     {
@@ -144,12 +144,12 @@
       "away_team_abbr": "SUI",
       "fixture": "Qatar vs Switzerland",
       "fixture_zh": "卡塔尔 vs 瑞士",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Sat, June 13th at 3:00 PM EDT",
+      "home_score": 0,
+      "away_score": 1,
+      "result": "away_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "56'",
       "venue": "Levi's Stadium",
       "city": "Santa Clara, California",
       "country": "USA"
