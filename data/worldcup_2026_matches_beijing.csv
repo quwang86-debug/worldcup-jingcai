@@ -8,7 +8,7 @@ kickoff_order,espn_event_id,stage_zh,group,beijing_datetime,beijing_date,beijing
 7,760418,小组赛,C,2026-06-14T09:00:00+08:00,2026-06-14,09:00,周日,Haiti,海地,Scotland,苏格兰,Haiti vs Scotland,海地 vs 苏格兰,0,1,away_win,post,已完赛,FT,Gillette Stadium,"Foxborough, Massachusetts",USA,2026-06-14T01:00Z
 8,760421,小组赛,D,2026-06-14T12:00:00+08:00,2026-06-14,12:00,周日,Australia,澳大利亚,Türkiye,土耳其,Australia vs Türkiye,澳大利亚 vs 土耳其,2,0,home_win,post,已完赛,FT,BC Place,Vancouver,Canada,2026-06-14T04:00Z
 9,760422,小组赛,E,2026-06-15T01:00:00+08:00,2026-06-15,01:00,周一,Germany,德国,Curaçao,库拉索,Germany vs Curaçao,德国 vs 库拉索,7,1,home_win,post,已完赛,FT,NRG Stadium,"Houston, Texas",USA,2026-06-14T17:00Z
-10,760425,小组赛,F,2026-06-15T04:00:00+08:00,2026-06-15,04:00,周一,Netherlands,荷兰,Japan,日本,Netherlands vs Japan,荷兰 vs 日本,0,0,draw,in,进行中,23',AT&T Stadium,"Arlington, Texas",USA,2026-06-14T20:00Z
+10,760425,小组赛,F,2026-06-15T04:00:00+08:00,2026-06-15,04:00,周一,Netherlands,荷兰,Japan,日本,Netherlands vs Japan,荷兰 vs 日本,2,2,draw,post,已完赛,FT,AT&T Stadium,"Arlington, Texas",USA,2026-06-14T20:00Z
 11,760423,小组赛,E,2026-06-15T07:00:00+08:00,2026-06-15,07:00,周一,Ivory Coast,科特迪瓦,Ecuador,厄瓜多尔,Ivory Coast vs Ecuador,科特迪瓦 vs 厄瓜多尔,,,,pre,未开赛,"Sun, June 14th at 7:00 PM EDT",Lincoln Financial Field,"Philadelphia, Pennsylvania",USA,2026-06-14T23:00Z
 12,760424,小组赛,F,2026-06-15T10:00:00+08:00,2026-06-15,10:00,周一,Sweden,瑞典,Tunisia,突尼斯,Sweden vs Tunisia,瑞典 vs 突尼斯,,,,pre,未开赛,"Sun, June 14th at 10:00 PM EDT",Estadio BBVA,Guadalupe,Mexico,2026-06-15T02:00Z
 13,760428,小组赛,H,2026-06-16T00:00:00+08:00,2026-06-16,00:00,周二,Spain,西班牙,Cape Verde,佛得角,Spain vs Cape Verde,西班牙 vs 佛得角,,,,pre,未开赛,"Mon, June 15th at 12:00 PM EDT",Mercedes-Benz Stadium,"Atlanta, Georgia",USA,2026-06-15T16:00Z
