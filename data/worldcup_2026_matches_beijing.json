@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-15T18:44:53.818Z",
+  "fetched_at": "2026-06-15T21:48:03.632Z",
   "match_count": 104,
   "matches": [
     {
@@ -405,12 +405,12 @@
       "away_team_abbr": "EGY",
       "fixture": "Belgium vs Egypt",
       "fixture_zh": "比利时 vs 埃及",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Mon, June 15th at 3:00 PM EDT",
+      "home_score": 1,
+      "away_score": 1,
+      "result": "draw",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT",
       "venue": "Lumen Field",
       "city": "Seattle, Washington",
       "country": "USA"
