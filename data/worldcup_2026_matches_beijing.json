@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-15T21:48:03.632Z",
+  "fetched_at": "2026-06-15T23:55:07.158Z",
   "match_count": 104,
   "matches": [
     {
@@ -434,12 +434,12 @@
       "away_team_abbr": "URU",
       "fixture": "Saudi Arabia vs Uruguay",
       "fixture_zh": "沙特阿拉伯 vs 乌拉圭",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Mon, June 15th at 6:00 PM EDT",
+      "home_score": 1,
+      "away_score": 1,
+      "result": "draw",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "89'",
       "venue": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
       "country": "USA"
