@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-15T13:23:42.943Z",
+  "fetched_at": "2026-06-15T18:44:53.818Z",
   "match_count": 104,
   "matches": [
     {
@@ -376,12 +376,12 @@
       "away_team_abbr": "CPV",
       "fixture": "Spain vs Cape Verde",
       "fixture_zh": "西班牙 vs 佛得角",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Mon, June 15th at 12:00 PM EDT",
+      "home_score": 0,
+      "away_score": 0,
+      "result": "draw",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT",
       "venue": "Mercedes-Benz Stadium",
       "city": "Atlanta, Georgia",
       "country": "USA"
