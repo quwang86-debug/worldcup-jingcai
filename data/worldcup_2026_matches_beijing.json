@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-15T23:55:07.158Z",
+  "fetched_at": "2026-06-16T05:24:21.499Z",
   "match_count": 104,
   "matches": [
     {
@@ -437,9 +437,9 @@
       "home_score": 1,
       "away_score": 1,
       "result": "draw",
-      "status_state": "in",
-      "status_zh": "进行中",
-      "status_detail": "89'",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT",
       "venue": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
       "country": "USA"
@@ -463,12 +463,12 @@
       "away_team_abbr": "NZL",
       "fixture": "Iran vs New Zealand",
       "fixture_zh": "伊朗 vs 新西兰",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Mon, June 15th at 9:00 PM EDT",
+      "home_score": 2,
+      "away_score": 2,
+      "result": "draw",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT",
       "venue": "SoFi Stadium",
       "city": "Inglewood, California",
       "country": "USA"
