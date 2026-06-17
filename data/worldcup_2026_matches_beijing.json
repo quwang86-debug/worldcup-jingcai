@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-17T20:26:39.237Z",
+  "fetched_at": "2026-06-17T22:49:49.857Z",
   "match_count": 104,
   "matches": [
     {
@@ -637,12 +637,12 @@
       "away_team_abbr": "CRO",
       "fixture": "England vs Croatia",
       "fixture_zh": "英格兰 vs 克罗地亚",
-      "home_score": 1,
-      "away_score": 0,
+      "home_score": 4,
+      "away_score": 2,
       "result": "home_win",
-      "status_state": "in",
-      "status_zh": "进行中",
-      "status_detail": "26'",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT",
       "venue": "AT&T Stadium",
       "city": "Arlington, Texas",
       "country": "USA"
