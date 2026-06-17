@@ -19,7 +19,7 @@ kickoff_order,espn_event_id,stage_zh,group,beijing_datetime,beijing_date,beijing
 18,760430,小组赛,I,2026-06-17T06:00:00+08:00,2026-06-17,06:00,周三,Iraq,伊拉克,Norway,挪威,Iraq vs Norway,伊拉克 vs 挪威,1,4,away_win,post,已完赛,FT,Gillette Stadium,"Foxborough, Massachusetts",USA,2026-06-16T22:00Z
 19,760433,小组赛,J,2026-06-17T09:00:00+08:00,2026-06-17,09:00,周三,Argentina,阿根廷,Algeria,阿尔及利亚,Argentina vs Algeria,阿根廷 vs 阿尔及利亚,3,0,home_win,post,已完赛,FT,GEHA Field at Arrowhead Stadium,"Kansas City, Missouri",USA,2026-06-17T01:00Z
 20,760431,小组赛,J,2026-06-17T12:00:00+08:00,2026-06-17,12:00,周三,Austria,奥地利,Jordan,约旦,Austria vs Jordan,奥地利 vs 约旦,3,1,home_win,post,已完赛,FT,Levi's Stadium,"Santa Clara, California",USA,2026-06-17T04:00Z
-21,760435,小组赛,K,2026-06-18T01:00:00+08:00,2026-06-18,01:00,周四,Portugal,葡萄牙,Congo DR,刚果(金),Portugal vs Congo DR,葡萄牙 vs 刚果(金),,,,pre,未开赛,"Wed, June 17th at 1:00 PM EDT",NRG Stadium,"Houston, Texas",USA,2026-06-17T17:00Z
+21,760435,小组赛,K,2026-06-18T01:00:00+08:00,2026-06-18,01:00,周四,Portugal,葡萄牙,Congo DR,刚果(金),Portugal vs Congo DR,葡萄牙 vs 刚果(金),1,0,home_win,in,进行中,13',NRG Stadium,"Houston, Texas",USA,2026-06-17T17:00Z
 22,760437,小组赛,L,2026-06-18T04:00:00+08:00,2026-06-18,04:00,周四,England,英格兰,Croatia,克罗地亚,England vs Croatia,英格兰 vs 克罗地亚,,,,pre,未开赛,"Wed, June 17th at 4:00 PM EDT",AT&T Stadium,"Arlington, Texas",USA,2026-06-17T20:00Z
 23,760434,小组赛,L,2026-06-18T07:00:00+08:00,2026-06-18,07:00,周四,Ghana,加纳,Panama,巴拿马,Ghana vs Panama,加纳 vs 巴拿马,,,,pre,未开赛,"Wed, June 17th at 7:00 PM EDT",BMO Field,Toronto,Canada,2026-06-17T23:00Z
 24,760436,小组赛,K,2026-06-18T10:00:00+08:00,2026-06-18,10:00,周四,Uzbekistan,乌兹别克斯坦,Colombia,哥伦比亚,Uzbekistan vs Colombia,乌兹别克斯坦 vs 哥伦比亚,,,,pre,未开赛,"Wed, June 17th at 10:00 PM EDT",Estadio Banorte,Mexico City,Mexico,2026-06-18T02:00Z
