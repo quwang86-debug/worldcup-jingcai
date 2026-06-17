@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-17T05:04:14.273Z",
+  "fetched_at": "2026-06-17T09:58:43.964Z",
   "match_count": 104,
   "matches": [
     {
@@ -579,12 +579,12 @@
       "away_team_abbr": "JOR",
       "fixture": "Austria vs Jordan",
       "fixture_zh": "奥地利 vs 约旦",
-      "home_score": 1,
-      "away_score": 0,
+      "home_score": 3,
+      "away_score": 1,
       "result": "home_win",
-      "status_state": "in",
-      "status_zh": "进行中",
-      "status_detail": "HT",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT",
       "venue": "Levi's Stadium",
       "city": "Santa Clara, California",
       "country": "USA"
