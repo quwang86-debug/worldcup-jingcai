@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-19T17:24:25.755Z",
+  "fetched_at": "2026-06-19T19:59:48.589Z",
   "match_count": 104,
   "matches": [
     {
@@ -840,12 +840,12 @@
       "away_team_abbr": "AUS",
       "fixture": "United States vs Australia",
       "fixture_zh": "美国 vs 澳大利亚",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Fri, June 19th at 3:00 PM EDT",
+      "home_score": 2,
+      "away_score": 0,
+      "result": "home_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "HT",
       "venue": "Lumen Field",
       "city": "Seattle, Washington",
       "country": "USA"
