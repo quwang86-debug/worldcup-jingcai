@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-19T21:16:08.407Z",
+  "fetched_at": "2026-06-19T23:08:23.847Z",
   "match_count": 104,
   "matches": [
     {
@@ -869,12 +869,12 @@
       "away_team_abbr": "MAR",
       "fixture": "Scotland vs Morocco",
       "fixture_zh": "苏格兰 vs 摩洛哥",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Fri, June 19th at 6:00 PM EDT",
+      "home_score": 0,
+      "away_score": 1,
+      "result": "away_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "46'",
       "venue": "Gillette Stadium",
       "city": "Foxborough, Massachusetts",
       "country": "USA"
