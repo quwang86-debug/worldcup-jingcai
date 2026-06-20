@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-20T20:22:10.358Z",
+  "fetched_at": "2026-06-20T22:18:10.111Z",
   "match_count": 104,
   "matches": [
     {
@@ -985,12 +985,12 @@
       "away_team_abbr": "CIV",
       "fixture": "Germany vs Ivory Coast",
       "fixture_zh": "德国 vs 科特迪瓦",
-      "home_score": 0,
-      "away_score": 0,
-      "result": "draw",
-      "status_state": "in",
-      "status_zh": "进行中",
-      "status_detail": "22'",
+      "home_score": 2,
+      "away_score": 1,
+      "result": "home_win",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT",
       "venue": "BMO Field",
       "city": "Toronto",
       "country": "Canada"
