@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-20T16:41:55.952Z",
+  "fetched_at": "2026-06-20T18:20:48.113Z",
   "match_count": 104,
   "matches": [
     {
@@ -956,12 +956,12 @@
       "away_team_abbr": "SWE",
       "fixture": "Netherlands vs Sweden",
       "fixture_zh": "荷兰 vs 瑞典",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Sat, June 20th at 1:00 PM EDT",
+      "home_score": 4,
+      "away_score": 1,
+      "result": "home_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "60'",
       "venue": "NRG Stadium",
       "city": "Houston, Texas",
       "country": "USA"
