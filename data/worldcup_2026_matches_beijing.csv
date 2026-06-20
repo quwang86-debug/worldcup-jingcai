@@ -31,8 +31,8 @@ kickoff_order,espn_event_id,stage_zh,group,beijing_datetime,beijing_date,beijing
 30,760445,小组赛,C,2026-06-20T06:00:00+08:00,2026-06-20,06:00,周六,Scotland,苏格兰,Morocco,摩洛哥,Scotland vs Morocco,苏格兰 vs 摩洛哥,0,1,away_win,post,已完赛,FT,Gillette Stadium,"Foxborough, Massachusetts",USA,2026-06-19T22:00Z
 31,760444,小组赛,C,2026-06-20T08:30:00+08:00,2026-06-20,08:30,周六,Brazil,巴西,Haiti,海地,Brazil vs Haiti,巴西 vs 海地,3,0,home_win,post,已完赛,FT,Lincoln Financial Field,"Philadelphia, Pennsylvania",USA,2026-06-20T00:30Z
 32,760443,小组赛,D,2026-06-20T11:00:00+08:00,2026-06-20,11:00,周六,Türkiye,土耳其,Paraguay,巴拉圭,Türkiye vs Paraguay,土耳其 vs 巴拉圭,0,1,away_win,post,已完赛,FT,Levi's Stadium,"Santa Clara, California",USA,2026-06-20T03:00Z
-33,760447,小组赛,F,2026-06-21T01:00:00+08:00,2026-06-21,01:00,周日,Netherlands,荷兰,Sweden,瑞典,Netherlands vs Sweden,荷兰 vs 瑞典,4,1,home_win,in,进行中,60',NRG Stadium,"Houston, Texas",USA,2026-06-20T17:00Z
-34,760448,小组赛,E,2026-06-21T04:00:00+08:00,2026-06-21,04:00,周日,Germany,德国,Ivory Coast,科特迪瓦,Germany vs Ivory Coast,德国 vs 科特迪瓦,,,,pre,未开赛,"Sat, June 20th at 4:00 PM EDT",BMO Field,Toronto,Canada,2026-06-20T20:00Z
+33,760447,小组赛,F,2026-06-21T01:00:00+08:00,2026-06-21,01:00,周日,Netherlands,荷兰,Sweden,瑞典,Netherlands vs Sweden,荷兰 vs 瑞典,5,1,home_win,post,已完赛,FT,NRG Stadium,"Houston, Texas",USA,2026-06-20T17:00Z
+34,760448,小组赛,E,2026-06-21T04:00:00+08:00,2026-06-21,04:00,周日,Germany,德国,Ivory Coast,科特迪瓦,Germany vs Ivory Coast,德国 vs 科特迪瓦,0,0,draw,in,进行中,22',BMO Field,Toronto,Canada,2026-06-20T20:00Z
 35,760446,小组赛,E,2026-06-21T08:00:00+08:00,2026-06-21,08:00,周日,Ecuador,厄瓜多尔,Curaçao,库拉索,Ecuador vs Curaçao,厄瓜多尔 vs 库拉索,,,,pre,未开赛,"Sat, June 20th at 8:00 PM EDT",GEHA Field at Arrowhead Stadium,"Kansas City, Missouri",USA,2026-06-21T00:00Z
 36,760449,小组赛,F,2026-06-21T12:00:00+08:00,2026-06-21,12:00,周日,Tunisia,突尼斯,Japan,日本,Tunisia vs Japan,突尼斯 vs 日本,,,,pre,未开赛,"Sun, June 20th at 12:00 AM EDT",Estadio BBVA,Guadalupe,Mexico,2026-06-21T04:00Z
 37,760453,小组赛,H,2026-06-22T00:00:00+08:00,2026-06-22,00:00,周一,Spain,西班牙,Saudi Arabia,沙特阿拉伯,Spain vs Saudi Arabia,西班牙 vs 沙特阿拉伯,,,,pre,未开赛,"Sun, June 21st at 12:00 PM EDT",Mercedes-Benz Stadium,"Atlanta, Georgia",USA,2026-06-21T16:00Z
