@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-21T17:46:44.535Z",
+  "fetched_at": "2026-06-21T19:56:31.550Z",
   "match_count": 104,
   "matches": [
     {
@@ -1075,9 +1075,9 @@
       "home_score": 4,
       "away_score": 0,
       "result": "home_win",
-      "status_state": "in",
-      "status_zh": "进行中",
-      "status_detail": "83'",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT",
       "venue": "Mercedes-Benz Stadium",
       "city": "Atlanta, Georgia",
       "country": "USA"
@@ -1101,12 +1101,12 @@
       "away_team_abbr": "IRN",
       "fixture": "Belgium vs Iran",
       "fixture_zh": "比利时 vs 伊朗",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Sun, June 21st at 3:00 PM EDT",
+      "home_score": 0,
+      "away_score": 0,
+      "result": "draw",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "HT",
       "venue": "SoFi Stadium",
       "city": "Inglewood, California",
       "country": "USA"
