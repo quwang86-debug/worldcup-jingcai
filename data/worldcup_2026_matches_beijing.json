@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-21T16:02:36.990Z",
+  "fetched_at": "2026-06-21T17:46:44.535Z",
   "match_count": 104,
   "matches": [
     {
@@ -1072,12 +1072,12 @@
       "away_team_abbr": "KSA",
       "fixture": "Spain vs Saudi Arabia",
       "fixture_zh": "西班牙 vs 沙特阿拉伯",
-      "home_score": 0,
+      "home_score": 4,
       "away_score": 0,
-      "result": "draw",
+      "result": "home_win",
       "status_state": "in",
       "status_zh": "进行中",
-      "status_detail": "1'",
+      "status_detail": "83'",
       "venue": "Mercedes-Benz Stadium",
       "city": "Atlanta, Georgia",
       "country": "USA"
