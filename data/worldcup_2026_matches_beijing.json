@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-22T21:09:58.963Z",
+  "fetched_at": "2026-06-22T23:39:01.738Z",
   "match_count": 104,
   "matches": [
     {
@@ -1217,12 +1217,12 @@
       "away_team_abbr": "IRQ",
       "fixture": "France vs Iraq",
       "fixture_zh": "法国 vs 伊拉克",
-      "home_score": 0,
+      "home_score": 1,
       "away_score": 0,
-      "result": "draw",
+      "result": "home_win",
       "status_state": "in",
       "status_zh": "进行中",
-      "status_detail": "9'",
+      "status_detail": "45'+3'",
       "venue": "Lincoln Financial Field",
       "city": "Philadelphia, Pennsylvania",
       "country": "USA"
