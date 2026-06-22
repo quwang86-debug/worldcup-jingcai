@@ -39,8 +39,8 @@ kickoff_order,espn_event_id,stage_zh,group,beijing_datetime,beijing_date,beijing
 38,760451,小组赛,G,2026-06-22T03:00:00+08:00,2026-06-22,03:00,周一,Belgium,比利时,Iran,伊朗,Belgium vs Iran,比利时 vs 伊朗,0,0,draw,post,已完赛,FT,SoFi Stadium,"Inglewood, California",USA,2026-06-21T19:00Z
 39,760450,小组赛,H,2026-06-22T06:00:00+08:00,2026-06-22,06:00,周一,Uruguay,乌拉圭,Cape Verde,佛得角,Uruguay vs Cape Verde,乌拉圭 vs 佛得角,2,2,draw,post,已完赛,FT,Hard Rock Stadium,"Miami Gardens, Florida",USA,2026-06-21T22:00Z
 40,760452,小组赛,G,2026-06-22T09:00:00+08:00,2026-06-22,09:00,周一,New Zealand,新西兰,Egypt,埃及,New Zealand vs Egypt,新西兰 vs 埃及,1,3,away_win,post,已完赛,FT,BC Place,Vancouver,Canada,2026-06-22T01:00Z
-41,760456,小组赛,J,2026-06-23T01:00:00+08:00,2026-06-23,01:00,周二,Argentina,阿根廷,Austria,奥地利,Argentina vs Austria,阿根廷 vs 奥地利,1,0,home_win,in,进行中,44',AT&T Stadium,"Arlington, Texas",USA,2026-06-22T17:00Z
-42,760457,小组赛,I,2026-06-23T05:00:00+08:00,2026-06-23,05:00,周二,France,法国,Iraq,伊拉克,France vs Iraq,法国 vs 伊拉克,,,,pre,未开赛,"Mon, June 22nd at 5:00 PM EDT",Lincoln Financial Field,"Philadelphia, Pennsylvania",USA,2026-06-22T21:00Z
+41,760456,小组赛,J,2026-06-23T01:00:00+08:00,2026-06-23,01:00,周二,Argentina,阿根廷,Austria,奥地利,Argentina vs Austria,阿根廷 vs 奥地利,2,0,home_win,post,已完赛,FT,AT&T Stadium,"Arlington, Texas",USA,2026-06-22T17:00Z
+42,760457,小组赛,I,2026-06-23T05:00:00+08:00,2026-06-23,05:00,周二,France,法国,Iraq,伊拉克,France vs Iraq,法国 vs 伊拉克,0,0,draw,in,进行中,9',Lincoln Financial Field,"Philadelphia, Pennsylvania",USA,2026-06-22T21:00Z
 43,760454,小组赛,I,2026-06-23T08:00:00+08:00,2026-06-23,08:00,周二,Norway,挪威,Senegal,塞内加尔,Norway vs Senegal,挪威 vs 塞内加尔,,,,pre,未开赛,"Mon, June 22nd at 8:00 PM EDT",MetLife Stadium,"East Rutherford, New Jersey",USA,2026-06-23T00:00Z
 44,760455,小组赛,J,2026-06-23T11:00:00+08:00,2026-06-23,11:00,周二,Jordan,约旦,Algeria,阿尔及利亚,Jordan vs Algeria,约旦 vs 阿尔及利亚,,,,pre,未开赛,"Mon, June 22nd at 11:00 PM EDT",Levi's Stadium,"Santa Clara, California",USA,2026-06-23T03:00Z
 45,760461,小组赛,K,2026-06-24T01:00:00+08:00,2026-06-24,01:00,周三,Portugal,葡萄牙,Uzbekistan,乌兹别克斯坦,Portugal vs Uzbekistan,葡萄牙 vs 乌兹别克斯坦,,,,pre,未开赛,"Tue, June 23rd at 1:00 PM EDT",NRG Stadium,"Houston, Texas",USA,2026-06-23T17:00Z
