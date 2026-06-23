@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-23T16:01:07.137Z",
+  "fetched_at": "2026-06-23T18:06:58.823Z",
   "match_count": 104,
   "matches": [
     {
@@ -1304,12 +1304,12 @@
       "away_team_abbr": "UZB",
       "fixture": "Portugal vs Uzbekistan",
       "fixture_zh": "葡萄牙 vs 乌兹别克斯坦",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Tue, June 23rd at 1:00 PM EDT",
+      "home_score": 3,
+      "away_score": 0,
+      "result": "home_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "HT",
       "venue": "NRG Stadium",
       "city": "Houston, Texas",
       "country": "USA"
