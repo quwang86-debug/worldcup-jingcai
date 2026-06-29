@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-29T16:04:15.846Z",
+  "fetched_at": "2026-06-29T18:18:17.115Z",
   "match_count": 104,
   "matches": [
     {
@@ -2145,12 +2145,12 @@
       "away_team_abbr": "JPN",
       "fixture": "Brazil vs Japan",
       "fixture_zh": "巴西 vs 日本",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Mon, June 29th at 1:00 PM EDT",
+      "home_score": 1,
+      "away_score": 1,
+      "result": "draw",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "56'",
       "venue": "NRG Stadium",
       "city": "Houston, Texas",
       "country": "USA"
