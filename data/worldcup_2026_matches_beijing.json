@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-29T20:53:44.544Z",
+  "fetched_at": "2026-06-29T22:16:01.864Z",
   "match_count": 104,
   "matches": [
     {
@@ -2174,12 +2174,12 @@
       "away_team_abbr": "PAR",
       "fixture": "Germany vs Paraguay",
       "fixture_zh": "德国 vs 巴拉圭",
-      "home_score": 0,
-      "away_score": 0,
+      "home_score": 1,
+      "away_score": 1,
       "result": "draw",
       "status_state": "in",
       "status_zh": "进行中",
-      "status_detail": "23'",
+      "status_detail": "83'",
       "venue": "Gillette Stadium",
       "city": "Foxborough, Massachusetts",
       "country": "USA"
