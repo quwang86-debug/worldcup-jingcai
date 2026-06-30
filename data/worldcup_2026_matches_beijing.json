@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-06-30T15:37:34.635Z",
+  "fetched_at": "2026-06-30T18:06:32.621Z",
   "match_count": 104,
   "matches": [
     {
@@ -2232,12 +2232,12 @@
       "away_team_abbr": "NOR",
       "fixture": "Ivory Coast vs Norway",
       "fixture_zh": "科特迪瓦 vs 挪威",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Tue, June 30th at 1:00 PM EDT",
+      "home_score": 0,
+      "away_score": 1,
+      "result": "away_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "46'",
       "venue": "AT&T Stadium",
       "city": "Arlington, Texas",
       "country": "USA"
