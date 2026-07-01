@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-01T18:06:03.757Z",
+  "fetched_at": "2026-07-01T20:07:25.984Z",
   "match_count": 104,
   "matches": [
     {
@@ -2348,12 +2348,12 @@
       "away_team_abbr": "SEN",
       "fixture": "Belgium vs Senegal",
       "fixture_zh": "比利时 vs 塞内加尔",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Wed, July 1st at 4:00 PM EDT",
+      "home_score": 0,
+      "away_score": 0,
+      "result": "draw",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "7'",
       "venue": "Lumen Field",
       "city": "Seattle, Washington",
       "country": "USA"
