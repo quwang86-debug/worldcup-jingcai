@@ -79,7 +79,7 @@ kickoff_order,espn_event_id,stage_zh,group,beijing_datetime,beijing_date,beijing
 78,760492,1/16决赛,,2026-07-01T05:00:00+08:00,2026-07-01,05:00,周三,France,法国,Sweden,瑞典,France vs Sweden,法国 vs 瑞典,3,0,home_win,post,已完赛,FT,MetLife Stadium,"East Rutherford, New Jersey",USA,2026-06-30T21:00Z
 79,760491,1/16决赛,,2026-07-01T10:00:00+08:00,2026-07-01,10:00,周三,Mexico,墨西哥,Ecuador,厄瓜多尔,Mexico vs Ecuador,墨西哥 vs 厄瓜多尔,2,0,home_win,post,已完赛,FT,Estadio Banorte,Mexico City,Mexico,2026-07-01T02:00Z
 80,760495,1/16决赛,,2026-07-02T00:00:00+08:00,2026-07-02,00:00,周四,England,英格兰,Congo DR,刚果(金),England vs Congo DR,英格兰 vs 刚果(金),2,1,home_win,post,已完赛,FT,Mercedes-Benz Stadium,"Atlanta, Georgia",USA,2026-07-01T16:00Z
-81,760493,1/16决赛,,2026-07-02T04:00:00+08:00,2026-07-02,04:00,周四,Belgium,比利时,Senegal,塞内加尔,Belgium vs Senegal,比利时 vs 塞内加尔,0,0,draw,in,进行中,7',Lumen Field,"Seattle, Washington",USA,2026-07-01T20:00Z
+81,760493,1/16决赛,,2026-07-02T04:00:00+08:00,2026-07-02,04:00,周四,Belgium,比利时,Senegal,塞内加尔,Belgium vs Senegal,比利时 vs 塞内加尔,2,2,draw,in,进行中,Extra Time Halftime,Lumen Field,"Seattle, Washington",USA,2026-07-01T20:00Z
 82,760494,1/16决赛,,2026-07-02T08:00:00+08:00,2026-07-02,08:00,周四,United States,美国,Bosnia-Herzegovina,波黑,United States vs Bosnia-Herzegovina,美国 vs 波黑,,,,pre,未开赛,"Wed, July 1st at 8:00 PM EDT",Levi's Stadium,"Santa Clara, California",USA,2026-07-02T00:00Z
 83,760497,1/16决赛,,2026-07-03T03:00:00+08:00,2026-07-03,03:00,周五,Spain,西班牙,Austria,奥地利,Spain vs Austria,西班牙 vs 奥地利,,,,pre,未开赛,"Thu, July 2nd at 3:00 PM EDT",SoFi Stadium,"Inglewood, California",USA,2026-07-02T19:00Z
 84,760496,1/16决赛,,2026-07-03T07:00:00+08:00,2026-07-03,07:00,周五,Portugal,葡萄牙,Croatia,克罗地亚,Portugal vs Croatia,葡萄牙 vs 克罗地亚,,,,pre,未开赛,"Thu, July 2nd at 7:00 PM EDT",BMO Field,Toronto,Canada,2026-07-02T23:00Z
