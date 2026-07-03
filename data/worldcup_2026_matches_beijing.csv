@@ -84,7 +84,7 @@ kickoff_order,espn_event_id,stage_zh,group,beijing_datetime,beijing_date,beijing
 83,760497,1/16决赛,,2026-07-03T03:00:00+08:00,2026-07-03,03:00,周五,Spain,西班牙,Austria,奥地利,Spain vs Austria,西班牙 vs 奥地利,3,0,home_win,post,已完赛,FT,SoFi Stadium,"Inglewood, California",USA,2026-07-02T19:00Z
 84,760496,1/16决赛,,2026-07-03T07:00:00+08:00,2026-07-03,07:00,周五,Portugal,葡萄牙,Croatia,克罗地亚,Portugal vs Croatia,葡萄牙 vs 克罗地亚,2,1,home_win,post,已完赛,FT,BMO Field,Toronto,Canada,2026-07-02T23:00Z
 85,760498,1/16决赛,,2026-07-03T11:00:00+08:00,2026-07-03,11:00,周五,Switzerland,瑞士,Algeria,阿尔及利亚,Switzerland vs Algeria,瑞士 vs 阿尔及利亚,2,0,home_win,post,已完赛,FT,BC Place,Vancouver,Canada,2026-07-03T03:00Z
-86,760499,1/16决赛,,2026-07-04T02:00:00+08:00,2026-07-04,02:00,周六,Australia,澳大利亚,Egypt,埃及,Australia vs Egypt,澳大利亚 vs 埃及,,,,pre,未开赛,"Fri, July 3rd at 2:00 PM EDT",AT&T Stadium,"Arlington, Texas",USA,2026-07-03T18:00Z
+86,760499,1/16决赛,,2026-07-04T02:00:00+08:00,2026-07-04,02:00,周六,Australia,澳大利亚,Egypt,埃及,Australia vs Egypt,澳大利亚 vs 埃及,0,1,away_win,in,进行中,19',AT&T Stadium,"Arlington, Texas",USA,2026-07-03T18:00Z
 87,760500,1/16决赛,,2026-07-04T06:00:00+08:00,2026-07-04,06:00,周六,Argentina,阿根廷,Cape Verde,佛得角,Argentina vs Cape Verde,阿根廷 vs 佛得角,,,,pre,未开赛,"Fri, July 3rd at 6:00 PM EDT",Hard Rock Stadium,"Miami Gardens, Florida",USA,2026-07-03T22:00Z
 88,760501,1/16决赛,,2026-07-04T09:30:00+08:00,2026-07-04,09:30,周六,Colombia,哥伦比亚,Ghana,加纳,Colombia vs Ghana,哥伦比亚 vs 加纳,,,,pre,未开赛,"Fri, July 3rd at 9:30 PM EDT",GEHA Field at Arrowhead Stadium,"Kansas City, Missouri",USA,2026-07-04T01:30Z
 89,760502,1/8决赛,,2026-07-05T01:00:00+08:00,2026-07-05,01:00,周日,Canada,加拿大,Morocco,摩洛哥,Canada vs Morocco,加拿大 vs 摩洛哥,,,,pre,未开赛,"Sat, July 4th at 1:00 PM EDT",NRG Stadium,"Houston, Texas",USA,2026-07-04T17:00Z
