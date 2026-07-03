@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-02T22:14:56.265Z",
+  "fetched_at": "2026-07-03T00:15:29.973Z",
   "match_count": 104,
   "matches": [
     {
@@ -2435,12 +2435,12 @@
       "away_team_abbr": "CRO",
       "fixture": "Portugal vs Croatia",
       "fixture_zh": "葡萄牙 vs 克罗地亚",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Thu, July 2nd at 7:00 PM EDT",
+      "home_score": 0,
+      "away_score": 1,
+      "result": "away_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "55'",
       "venue": "BMO Field",
       "city": "Toronto",
       "country": "Canada"
