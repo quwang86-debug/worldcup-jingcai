@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-03T22:12:33.226Z",
+  "fetched_at": "2026-07-04T00:14:04.310Z",
   "match_count": 104,
   "matches": [
     {
@@ -2522,12 +2522,12 @@
       "away_team_abbr": "CPV",
       "fixture": "Argentina vs Cape Verde",
       "fixture_zh": "阿根廷 vs 佛得角",
-      "home_score": 0,
-      "away_score": 0,
-      "result": "draw",
+      "home_score": 2,
+      "away_score": 1,
+      "result": "home_win",
       "status_state": "in",
       "status_zh": "进行中",
-      "status_detail": "11'",
+      "status_detail": "99'",
       "venue": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
       "country": "USA"
