@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-06T19:01:56.105Z",
+  "fetched_at": "2026-07-06T20:56:03.913Z",
   "match_count": 104,
   "matches": [
     {
@@ -2697,11 +2697,11 @@
       "fixture": "Portugal vs Spain",
       "fixture_zh": "葡萄牙 vs 西班牙",
       "home_score": 0,
-      "away_score": 0,
-      "result": "draw",
+      "away_score": 1,
+      "result": "away_win",
       "status_state": "in",
       "status_zh": "进行中",
-      "status_detail": "2'",
+      "status_detail": "90'+3'",
       "venue": "AT&T Stadium",
       "city": "Arlington, Texas",
       "country": "USA"
