@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-07T15:09:37.322Z",
+  "fetched_at": "2026-07-07T18:08:49.889Z",
   "match_count": 104,
   "matches": [
     {
@@ -2754,12 +2754,12 @@
       "away_team_abbr": "EGY",
       "fixture": "Argentina vs Egypt",
       "fixture_zh": "阿根廷 vs 埃及",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Tue, July 7th at 12:00 PM EDT",
+      "home_score": 3,
+      "away_score": 2,
+      "result": "home_win",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT",
       "venue": "Mercedes-Benz Stadium",
       "city": "Atlanta, Georgia",
       "country": "USA"

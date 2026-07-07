@@ -93,7 +93,7 @@ kickoff_order,espn_event_id,stage_zh,group,beijing_datetime,beijing_date,beijing
 92,760505,1/8决赛,,2026-07-06T09:00:00+08:00,2026-07-06,09:00,周一,Mexico,墨西哥,England,英格兰,Mexico vs England,墨西哥 vs 英格兰,2,3,away_win,post,已完赛,FT,Estadio Banorte,Mexico City,Mexico,2026-07-06T01:00Z
 93,760506,1/8决赛,,2026-07-07T03:00:00+08:00,2026-07-07,03:00,周二,Portugal,葡萄牙,Spain,西班牙,Portugal vs Spain,葡萄牙 vs 西班牙,0,1,away_win,post,已完赛,FT,AT&T Stadium,"Arlington, Texas",USA,2026-07-06T19:00Z
 94,760507,1/8决赛,,2026-07-07T08:00:00+08:00,2026-07-07,08:00,周二,United States,美国,Belgium,比利时,United States vs Belgium,美国 vs 比利时,1,4,away_win,post,已完赛,FT,Lumen Field,"Seattle, Washington",USA,2026-07-07T00:00Z
-95,760509,1/8决赛,,2026-07-08T00:00:00+08:00,2026-07-08,00:00,周三,Argentina,阿根廷,Egypt,埃及,Argentina vs Egypt,阿根廷 vs 埃及,,,,pre,未开赛,"Tue, July 7th at 12:00 PM EDT",Mercedes-Benz Stadium,"Atlanta, Georgia",USA,2026-07-07T16:00Z
+95,760509,1/8决赛,,2026-07-08T00:00:00+08:00,2026-07-08,00:00,周三,Argentina,阿根廷,Egypt,埃及,Argentina vs Egypt,阿根廷 vs 埃及,3,2,home_win,post,已完赛,FT,Mercedes-Benz Stadium,"Atlanta, Georgia",USA,2026-07-07T16:00Z
 96,760508,1/8决赛,,2026-07-08T04:00:00+08:00,2026-07-08,04:00,周三,Switzerland,瑞士,Colombia,哥伦比亚,Switzerland vs Colombia,瑞士 vs 哥伦比亚,,,,pre,未开赛,"Tue, July 7th at 4:00 PM EDT",BC Place,Vancouver,Canada,2026-07-07T20:00Z
 97,760510,1/4决赛,,2026-07-10T04:00:00+08:00,2026-07-10,04:00,周五,France,法国,Morocco,摩洛哥,France vs Morocco,法国 vs 摩洛哥,,,,pre,未开赛,"Thu, July 9th at 4:00 PM EDT",Gillette Stadium,"Foxborough, Massachusetts",USA,2026-07-09T20:00Z
 98,760511,1/4决赛,,2026-07-11T03:00:00+08:00,2026-07-11,03:00,周六,Spain,西班牙,Belgium,比利时,Spain vs Belgium,西班牙 vs 比利时,,,,pre,未开赛,"Fri, July 10th at 3:00 PM EDT",SoFi Stadium,"Inglewood, California",USA,2026-07-10T19:00Z
