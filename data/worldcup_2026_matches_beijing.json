@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-07T20:54:23.067Z",
+  "fetched_at": "2026-07-07T22:18:07.046Z",
   "match_count": 104,
   "matches": [
     {
@@ -2788,7 +2788,7 @@
       "result": "draw",
       "status_state": "in",
       "status_zh": "进行中",
-      "status_detail": "HT",
+      "status_detail": "Extra Time Halftime",
       "venue": "BC Place",
       "city": "Vancouver",
       "country": "Canada"
