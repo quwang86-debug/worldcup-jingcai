@@ -1,6 +1,6 @@
 # 2026 World Cup Schedule Sources
 
-Fetched at: 2026-07-08T15:29:06.567Z
+Fetched at: 2026-07-08T17:47:39.655Z
 
 - ESPN FIFA World Cup scoreboard API: https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200
 - Official FIFA schedule page for cross-checking: https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/scores-fixtures
