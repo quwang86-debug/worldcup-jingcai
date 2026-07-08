@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-07T22:18:07.046Z",
+  "fetched_at": "2026-07-08T00:07:16.287Z",
   "match_count": 104,
   "matches": [
     {
@@ -2786,9 +2786,9 @@
       "home_score": 0,
       "away_score": 0,
       "result": "draw",
-      "status_state": "in",
-      "status_zh": "进行中",
-      "status_detail": "Extra Time Halftime",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "FT-Pens",
       "venue": "BC Place",
       "city": "Vancouver",
       "country": "Canada"
@@ -2894,11 +2894,11 @@
       "home_team": "Argentina",
       "home_team_zh": "阿根廷",
       "home_team_abbr": "ARG",
-      "away_team": "Round of 16 8 Winner",
-      "away_team_zh": "1/8决赛第8场胜者",
-      "away_team_abbr": "RD16 W8",
-      "fixture": "Argentina vs Round of 16 8 Winner",
-      "fixture_zh": "阿根廷 vs 1/8决赛第8场胜者",
+      "away_team": "Switzerland",
+      "away_team_zh": "瑞士",
+      "away_team_abbr": "SUI",
+      "fixture": "Argentina vs Switzerland",
+      "fixture_zh": "阿根廷 vs 瑞士",
       "home_score": null,
       "away_score": null,
       "result": null,
