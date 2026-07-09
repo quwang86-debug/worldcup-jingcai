@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-09T18:04:54.841Z",
+  "fetched_at": "2026-07-09T21:36:34.415Z",
   "match_count": 104,
   "matches": [
     {
@@ -2812,12 +2812,12 @@
       "away_team_abbr": "MAR",
       "fixture": "France vs Morocco",
       "fixture_zh": "法国 vs 摩洛哥",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Thu, July 9th at 4:00 PM EDT",
+      "home_score": 2,
+      "away_score": 0,
+      "result": "home_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "72'",
       "venue": "Gillette Stadium",
       "city": "Foxborough, Massachusetts",
       "country": "USA"
