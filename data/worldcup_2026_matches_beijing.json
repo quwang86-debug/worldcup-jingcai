@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-10T18:39:26.408Z",
+  "fetched_at": "2026-07-10T20:38:31.741Z",
   "match_count": 104,
   "matches": [
     {
@@ -2841,12 +2841,12 @@
       "away_team_abbr": "BEL",
       "fixture": "Spain vs Belgium",
       "fixture_zh": "西班牙 vs 比利时",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Fri, July 10th at 3:00 PM EDT",
+      "home_score": 1,
+      "away_score": 1,
+      "result": "draw",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "76'",
       "venue": "SoFi Stadium",
       "city": "Inglewood, California",
       "country": "USA"
