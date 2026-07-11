@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-11T21:57:41.858Z",
+  "fetched_at": "2026-07-11T22:58:19.098Z",
   "match_count": 104,
   "matches": [
     {
@@ -2875,7 +2875,7 @@
       "result": "draw",
       "status_state": "in",
       "status_zh": "进行中",
-      "status_detail": "HT",
+      "status_detail": "90'+5'",
       "venue": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
       "country": "USA"
