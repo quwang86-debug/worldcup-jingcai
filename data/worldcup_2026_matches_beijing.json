@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-12T21:59:10.765Z",
+  "fetched_at": "2026-07-12T22:58:34.481Z",
   "match_count": 104,
   "matches": [
     {
