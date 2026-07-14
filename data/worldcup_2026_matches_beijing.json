@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-14T17:23:18.122Z",
+  "fetched_at": "2026-07-14T19:38:41.570Z",
   "match_count": 104,
   "matches": [
     {
@@ -2928,12 +2928,12 @@
       "away_team_abbr": "ESP",
       "fixture": "France vs Spain",
       "fixture_zh": "法国 vs 西班牙",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Tue, July 14th at 3:00 PM EDT",
+      "home_score": 0,
+      "away_score": 1,
+      "result": "away_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "37'",
       "venue": "AT&T Stadium",
       "city": "Arlington, Texas",
       "country": "USA"
