@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-18T21:00:25.156Z",
+  "fetched_at": "2026-07-18T21:58:01.020Z",
   "match_count": 104,
   "matches": [
     {
@@ -2986,12 +2986,12 @@
       "away_team_abbr": "ENG",
       "fixture": "France vs England",
       "fixture_zh": "法国 vs 英格兰",
-      "home_score": null,
-      "away_score": null,
-      "result": null,
-      "status_state": "pre",
-      "status_zh": "未开赛",
-      "status_detail": "Sat, July 18th at 5:00 PM EDT",
+      "home_score": 0,
+      "away_score": 4,
+      "result": "away_win",
+      "status_state": "in",
+      "status_zh": "进行中",
+      "status_detail": "HT",
       "venue": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
       "country": "USA"
