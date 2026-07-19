@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-19T22:00:17.500Z",
+  "fetched_at": "2026-07-19T23:01:37.497Z",
   "match_count": 104,
   "matches": [
     {
@@ -3018,9 +3018,9 @@
       "home_score": 1,
       "away_score": 0,
       "result": "home_win",
-      "status_state": "in",
-      "status_zh": "进行中",
-      "status_detail": "120'+3'",
+      "status_state": "post",
+      "status_zh": "已完赛",
+      "status_detail": "AET",
       "venue": "MetLife Stadium",
       "city": "East Rutherford, New Jersey",
       "country": "USA"
