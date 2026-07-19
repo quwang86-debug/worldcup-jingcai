@@ -6,7 +6,7 @@
     "name": "ESPN FIFA World Cup scoreboard API",
     "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260720&limit=200"
   },
-  "fetched_at": "2026-07-19T19:18:19.418Z",
+  "fetched_at": "2026-07-19T21:02:00.112Z",
   "match_count": 104,
   "matches": [
     {
@@ -3020,7 +3020,7 @@
       "result": "draw",
       "status_state": "in",
       "status_zh": "进行中",
-      "status_detail": "12'",
+      "status_detail": "84'",
       "venue": "MetLife Stadium",
       "city": "East Rutherford, New Jersey",
       "country": "USA"
